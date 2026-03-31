@@ -1,0 +1,15 @@
+services:
+  db-gym:
+    image: postgres:latest
+    container_name: postgres-smartgym
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: smartgym_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

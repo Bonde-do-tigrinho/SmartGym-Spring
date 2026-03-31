@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/smartgym_db
+    username: admin
+    password: admin
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update # O segredo: ele vai criar as tabelas sozinho pra você!
+    show-sql: true # Vai imprimir no console o SQL que o Spring está executando
+    properties:
+      hibernate:
+        format_sql: true
