@@ -1,4 +1,4 @@
-package com.example.smartgym.infrastructure.persistence.entities
+package com.academia.smartgym.infrastructure.persistence.entities
 
 import jakarta.persistence.*
 

@@ -1,4 +1,4 @@
-package com.example.smartgym
+package com.academia.smartgym
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class SmartGym
 
 fun main(args: Array<String>) {
-	runApplication<SmartGym>(*args)
+	runApplication<com.academia.smartgym.SmartGym>(*args)
 }
