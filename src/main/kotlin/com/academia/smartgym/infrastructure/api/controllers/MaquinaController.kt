@@ -9,7 +9,11 @@ import org.springframework.web.bind.annotation.*
 class MaquinaController(private val useCase: MaquinaUseCase) {
 
     @GetMapping
-    fun getAll() = useCase.listarTodas()
+    fun getAll(@RequestParam(required = false) nome: String?) =
+        if (nome.isNullOrBlank())
+            useCase.listarTodas()
+        else
+            useCase.buscarPorNome(nome)
 
     @GetMapping("/{id}")
     fun getById(@PathVariable id: Long) = useCase.buscarPorId(id)
