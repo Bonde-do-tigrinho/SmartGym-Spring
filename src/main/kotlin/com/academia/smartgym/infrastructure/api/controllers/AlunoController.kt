@@ -17,13 +17,13 @@ class AlunoController(
     fun criar(@RequestBody aluno: Aluno) = useCase.criar(aluno)
 
     @GetMapping("/{id}")
-    fun buscar(@PathVariable id: Long) = useCase.buscar(id)
+    fun buscar(@PathVariable id: Int) = useCase.buscar(id)
 
     @DeleteMapping("/{id}")
-    fun deletar(@PathVariable id: Long) = useCase.deletar(id)
+    fun deletar(@PathVariable id: Int) = useCase.deletar(id)
 
     @PutMapping("/{id}")
-    fun atualizar(@PathVariable id: Long, @RequestBody aluno: Aluno): Aluno {
+    fun atualizar(@PathVariable id: Int, @RequestBody aluno: Aluno): Aluno {
         return useCase.atualizar(id, aluno)
     }
 }

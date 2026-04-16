@@ -12,7 +12,7 @@ class AlunoRepositoryImpl (
     override fun findAll(): List<Aluno> =
         springRepo.findAll().map{ AlunoMapper.toDomain(it) }
 
-    override fun findById(id: Long): Aluno? =
+    override fun findById(id: Int): Aluno? =
         springRepo.findById(id).map { AlunoMapper.toDomain(it) }.orElse(null)
 
     override fun save(aluno: Aluno): Aluno =
@@ -20,13 +20,12 @@ class AlunoRepositoryImpl (
             springRepo.save(AlunoMapper.toEntity(aluno))
         )
 
-    override fun deleteById(id: Long) =
+    override fun deleteById(id: Int) =
         springRepo.deleteById(id)
 
-    override fun update(id: Long, aluno: Aluno): Aluno? {
+    override fun update(id: Int, aluno: Aluno): Aluno? {
         val exists = springRepo.existsById(id)
         return if (exists) {
-            // Garantimos que o ID do objeto que vai ser salvo é o ID da rota
             val entityToUpdate = AlunoMapper.toEntity(aluno).copy(id = id)
             AlunoMapper.toDomain(springRepo.save(entityToUpdate))
         } else null

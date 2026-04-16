@@ -1,7 +1,7 @@
 package com.academia.smartgym.domain.model
 
 data class Aluno(
-    val id: Long?,
+    val id: Int?,
     val nome: String,
     val email: String,
     val cpf: String,

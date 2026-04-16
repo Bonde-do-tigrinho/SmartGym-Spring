@@ -13,7 +13,7 @@ data class AlunoEntity (
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
+    val id: Int? = null,
 
     val nome: String,
     @Column(unique = true, nullable = false)

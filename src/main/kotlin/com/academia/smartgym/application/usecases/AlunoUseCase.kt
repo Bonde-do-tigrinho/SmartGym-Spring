@@ -11,7 +11,7 @@ class AlunoUseCase(
 
     fun listar() = repository.findAll()
 
-    fun buscar(id: Long) =
+    fun buscar(id: Int) =
         repository.findById(id) ?: throw RuntimeException("Aluno não encontrado")
 
     fun criar(aluno: Aluno): Aluno{
@@ -25,9 +25,9 @@ class AlunoUseCase(
         return repository.save(aluno)
     }
 
-    fun deletar(id: Long) = repository.deleteById(id)
+    fun deletar(id: Int) = repository.deleteById(id)
 
-    fun atualizar(id: Long, aluno: Aluno): Aluno {
+    fun atualizar(id: Int, aluno: Aluno): Aluno {
         return repository.update(id, aluno)
             ?: throw RuntimeException("Aluno com id $id não encontrado para atualização")
     }
