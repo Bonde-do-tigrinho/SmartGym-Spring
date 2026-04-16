@@ -12,3 +12,9 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  web:
+    error:
+      include-stacktrace: never
+      include-message: always
+      whitelabel:
+        enabled: false
