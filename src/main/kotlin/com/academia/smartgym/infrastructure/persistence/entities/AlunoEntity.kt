@@ -9,8 +9,8 @@ import jakarta.persistence.OneToMany
 import jakarta.persistence.Table
 
 @Entity
-@Table(name = "usuarios")
-data class UsuarioEntity (
+@Table(name = "alunos")
+data class AlunoEntity (
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +32,6 @@ data class UsuarioEntity (
     val planoVencimento: String?,
     val planoValor: Double?,
 
-    @OneToMany(mappedBy = "usuarios")
+    @OneToMany(mappedBy = "aluno")
     val avaliacoes: List<AvaliacaoEntity> = emptyList()
 )

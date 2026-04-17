@@ -1,6 +1,6 @@
 package com.academia.smartgym.domain.model
 
-data class Usuario(
+data class Aluno(
     val id: Int?,
     val nome: String,
     val email: String,

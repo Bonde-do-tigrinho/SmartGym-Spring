@@ -15,7 +15,7 @@ class AvaliacaoEntity(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "aluno_id", referencedColumnName = "id", insertable = false, updatable = false)
-    val aluno: UsuarioEntity? = null,
+    val aluno: AlunoEntity? = null,
 
     @Column(nullable = false)
     val nomeAluno: String,

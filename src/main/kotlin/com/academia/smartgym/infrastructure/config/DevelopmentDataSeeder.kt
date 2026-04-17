@@ -1,15 +1,15 @@
 package com.academia.smartgym.infrastructure.config
 
-import com.academia.smartgym.application.usecases.UsuarioUseCase
+import com.academia.smartgym.application.usecases.AlunoUseCase
 import com.academia.smartgym.application.usecases.AvaliacaoUseCase
 import com.academia.smartgym.application.usecases.ExercicioUseCase
 import com.academia.smartgym.application.usecases.MaquinaUseCase
+import com.academia.smartgym.domain.model.Aluno
 import com.academia.smartgym.domain.model.Avaliacao
 import com.academia.smartgym.domain.model.Exercicio
 import com.academia.smartgym.domain.model.Maquina
 import com.academia.smartgym.domain.model.StatusMaquina
 import com.academia.smartgym.domain.model.TipoExercicio
-import com.academia.smartgym.domain.model.Usuario
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.stereotype.Component
@@ -18,7 +18,7 @@ import java.time.LocalDate
 @Component
 @ConditionalOnProperty(prefix = "app.seed", name = ["enabled"], havingValue = "true")
 class DevelopmentDataSeeder(
-    private val usuarioUseCase: UsuarioUseCase,
+    private val alunoUseCase: AlunoUseCase,
     private val maquinaUseCase: MaquinaUseCase,
     private val exercicioUseCase: ExercicioUseCase,
     private val avaliacaoUseCase: AvaliacaoUseCase
@@ -32,12 +32,12 @@ class DevelopmentDataSeeder(
         seedAvaliacoes(alunos)
     }
 
-    private fun seedAlunos(): List<Usuario> {
-        val existentes = usuarioUseCase.listar()
+    private fun seedAlunos(): List<Aluno> {
+        val existentes = alunoUseCase.listar()
         if (existentes.isNotEmpty()) return existentes
 
         val base = listOf(
-            Usuario(
+            Aluno(
                 id = null,
                 nome = "Lucas Mendes",
                 email = "lucas.mendes@smartgym.com",
@@ -50,7 +50,7 @@ class DevelopmentDataSeeder(
                 planoVencimento = "2026-05-15",
                 planoValor = 149.90
             ),
-            Usuario(
+            Aluno(
                 id = null,
                 nome = "Fernanda Lima",
                 email = "fernanda.lima@smartgym.com",
@@ -65,8 +65,8 @@ class DevelopmentDataSeeder(
             )
         )
 
-        base.forEach { usuarioUseCase.criar(it) }
-        return usuarioUseCase.listar()
+        base.forEach { alunoUseCase.criar(it) }
+        return alunoUseCase.listar()
     }
 
     private fun seedMaquinas(): List<Maquina> {
@@ -93,16 +93,12 @@ class DevelopmentDataSeeder(
             Exercicio(
                 nome = "Agachamento Livre",
                 descricao = "3 series de 12 repeticoes",
-                tipo = TipoExercicio.LIVRE,
-                grupoMuscular = null,
-                maquinaId = null
+                tipo = TipoExercicio.LIVRE
             ),
             Exercicio(
                 nome = "Prancha",
                 descricao = "3 series de 40 segundos",
-                tipo = TipoExercicio.LIVRE,
-                grupoMuscular = null,
-                maquinaId = null
+                tipo = TipoExercicio.LIVRE
             )
         )
 
@@ -112,8 +108,7 @@ class DevelopmentDataSeeder(
                     nome = "Leg Press",
                     descricao = "4 series de 10 repeticoes",
                     tipo = TipoExercicio.MAQUINA,
-                    maquinaId = primeiraMaquinaId,
-                    grupoMuscular = null,
+                    maquinaId = primeiraMaquinaId
                 )
             )
         }
@@ -124,8 +119,7 @@ class DevelopmentDataSeeder(
                     nome = "Puxada Alta",
                     descricao = "4 series de 12 repeticoes",
                     tipo = TipoExercicio.MAQUINA,
-                    grupoMuscular = null,
-                    maquinaId = null
+                    maquinaId = segundaMaquinaId
                 )
             )
         }
@@ -133,7 +127,7 @@ class DevelopmentDataSeeder(
         base.forEach { exercicioUseCase.salvar(it) }
     }
 
-    private fun seedAvaliacoes(alunos: List<Usuario>) {
+    private fun seedAvaliacoes(alunos: List<Aluno>) {
         if (avaliacaoUseCase.listarTodas().isNotEmpty()) return
 
         val base = alunos.take(2).mapIndexedNotNull { index, aluno ->
