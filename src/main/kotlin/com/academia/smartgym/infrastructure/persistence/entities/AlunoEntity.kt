@@ -5,6 +5,7 @@ import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
+import jakarta.persistence.OneToMany
 import jakarta.persistence.Table
 
 @Entity
@@ -29,5 +30,8 @@ data class AlunoEntity (
     val treinoAtual: String?,
     val focoTreino: String?,
     val planoVencimento: String?,
-    val planoValor: Double?
+    val planoValor: Double?,
+
+    @OneToMany(mappedBy = "aluno")
+    val avaliacoes: List<AvaliacaoEntity> = emptyList()
 )
