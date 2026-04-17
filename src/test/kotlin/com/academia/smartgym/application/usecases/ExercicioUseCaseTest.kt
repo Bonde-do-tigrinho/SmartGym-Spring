@@ -30,7 +30,7 @@ class ExercicioUseCaseTest {
     fun `listarTodos deve retornar lista de exercicios`() {
         // Arrange
         val exercicios = listOf(
-            Exercicio(1, "Supino", "Exercício de supino", TipoExercicio.MAQUINA, 1),
+            Exercicio(1, "Supino", "Exercício de supino", TipoExercicio.MAQUINA, "todes"),
             Exercicio(2, "Flexão", "Flexão de braços", TipoExercicio.LIVRE, null)
         )
         whenever(exercicioRepository.findAll()).thenReturn(exercicios)
@@ -48,7 +48,7 @@ class ExercicioUseCaseTest {
     @Test
     fun `buscarPorId deve retornar exercicio quando encontrado`() {
         // Arrange
-        val exercicio = Exercicio(1, "Supino", "Exercício de supino", TipoExercicio.MAQUINA, 1)
+        val exercicio = Exercicio(1, "Supino", "Exercício de supino", TipoExercicio.MAQUINA, "topdes")
         whenever(exercicioRepository.findById(1)).thenReturn(exercicio)
 
         // Act
@@ -73,7 +73,7 @@ class ExercicioUseCaseTest {
     @Test
     fun `salvar deve chamar repository com exercicio`() {
         // Arrange
-        val exercicio = Exercicio(null, "Supino", "Exercício de supino", TipoExercicio.MAQUINA, 1)
+        val exercicio = Exercicio(null, "Supino", "Exercício de supino", TipoExercicio.MAQUINA, "todes")
         val exercicioSalvo = exercicio.copy(id = 1)
         whenever(exercicioRepository.save(any())).thenReturn(exercicioSalvo)
 
@@ -98,8 +98,8 @@ class ExercicioUseCaseTest {
     fun `listarPorMaquina deve retornar exercicios da maquina`() {
         // Arrange
         val exercicios = listOf(
-            Exercicio(1, "Supino", "Exercício de supino", TipoExercicio.MAQUINA, 1),
-            Exercicio(3, "Supino Inclinado", "Supino inclinado", TipoExercicio.MAQUINA, 1)
+            Exercicio(1, "Supino", "Exercício de supino", TipoExercicio.MAQUINA, "todes"),
+            Exercicio(3, "Supino Inclinado", "Supino inclinado", TipoExercicio.MAQUINA, "todes")
         )
         whenever(exercicioRepository.findByMaquinaId(1)).thenReturn(exercicios)
 

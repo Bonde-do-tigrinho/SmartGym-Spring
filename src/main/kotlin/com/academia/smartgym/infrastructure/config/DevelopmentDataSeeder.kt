@@ -93,12 +93,16 @@ class DevelopmentDataSeeder(
             Exercicio(
                 nome = "Agachamento Livre",
                 descricao = "3 series de 12 repeticoes",
-                tipo = TipoExercicio.LIVRE
+                tipo = TipoExercicio.LIVRE,
+                grupoMuscular = "quadriceps",
+                maquinaId = null,
             ),
             Exercicio(
                 nome = "Prancha",
                 descricao = "3 series de 40 segundos",
-                tipo = TipoExercicio.LIVRE
+                tipo = TipoExercicio.LIVRE,
+                grupoMuscular = "Abdomen",
+                maquinaId = null,
             )
         )
 
@@ -108,7 +112,8 @@ class DevelopmentDataSeeder(
                     nome = "Leg Press",
                     descricao = "4 series de 10 repeticoes",
                     tipo = TipoExercicio.MAQUINA,
-                    maquinaId = primeiraMaquinaId
+                    maquinaId = primeiraMaquinaId,
+                    grupoMuscular = "Quadriceps",
                 )
             )
         }
@@ -119,7 +124,8 @@ class DevelopmentDataSeeder(
                     nome = "Puxada Alta",
                     descricao = "4 series de 12 repeticoes",
                     tipo = TipoExercicio.MAQUINA,
-                    maquinaId = segundaMaquinaId
+                    maquinaId = segundaMaquinaId,
+                    grupoMuscular = "Costas",
                 )
             )
         }
