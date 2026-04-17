@@ -1,10 +1,10 @@
 package com.academia.smartgym.infrastructure.persistence.mappers
 
-import com.academia.smartgym.domain.model.Aluno
-import com.academia.smartgym.infrastructure.persistence.entities.AlunoEntity
+import com.academia.smartgym.domain.model.Usuario
+import com.academia.smartgym.infrastructure.persistence.entities.UsuarioEntity
 
-object AlunoMapper {
-    fun toDomain(entity: AlunoEntity) = Aluno(
+object UsuarioMapper {
+    fun toDomain(entity: UsuarioEntity) = Usuario(
         id = entity.id,
         nome = entity.nome,
         email = entity.email,
@@ -18,7 +18,7 @@ object AlunoMapper {
         planoValor = entity.planoValor
     )
 
-    fun toEntity(domain: Aluno) = AlunoEntity(
+    fun toEntity(domain: Usuario) = UsuarioEntity(
         id = domain.id,
         nome = domain.nome,
         email = domain.email,

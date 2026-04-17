@@ -1,20 +1,20 @@
 package com.academia.smartgym.infrastructure.api.controllers
 
-import com.academia.smartgym.application.usecases.AlunoUseCase
-import com.academia.smartgym.domain.model.Aluno
+import com.academia.smartgym.application.usecases.UsuarioUseCase
+import com.academia.smartgym.domain.model.Usuario
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/alunos")
-class AlunoController(
-    private val useCase: AlunoUseCase
+class UsuarioController(
+    private val useCase: UsuarioUseCase
 ) {
 
     @GetMapping
     fun listar() = useCase.listar()
 
     @PostMapping
-    fun criar(@RequestBody aluno: Aluno) = useCase.criar(aluno)
+    fun criar(@RequestBody usuario: Usuario) = useCase.criar(usuario)
 
     @GetMapping("/{id}")
     fun buscar(@PathVariable id: Int) = useCase.buscar(id)
@@ -23,7 +23,7 @@ class AlunoController(
     fun deletar(@PathVariable id: Int) = useCase.deletar(id)
 
     @PutMapping("/{id}")
-    fun atualizar(@PathVariable id: Int, @RequestBody aluno: Aluno): Aluno {
-        return useCase.atualizar(id, aluno)
+    fun atualizar(@PathVariable id: Int, @RequestBody usuario: Usuario): Usuario {
+        return useCase.atualizar(id, usuario)
     }
 }
