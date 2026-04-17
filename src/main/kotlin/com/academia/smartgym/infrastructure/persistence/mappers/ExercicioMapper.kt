@@ -10,6 +10,7 @@ class ExercicioMapper {
         nome = nome,
         descricao = descricao,
         tipo = TipoExercicio.valueOf(tipo),
+        grupoMuscular = grupoMuscular,
         maquinaId = maquinaId
     )
 
@@ -18,6 +19,7 @@ class ExercicioMapper {
         nome = nome,
         descricao = descricao,
         tipo = tipo.name,
+        grupoMuscular = grupoMuscular,
         maquinaId = maquinaId
     )
 }
