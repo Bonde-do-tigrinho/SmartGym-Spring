@@ -1,6 +1,6 @@
 services:
   db-gym:
-    image: postgres:latest
+    image: postgres:16
     container_name: postgres-smartgym
     environment:
       POSTGRES_USER: admin
