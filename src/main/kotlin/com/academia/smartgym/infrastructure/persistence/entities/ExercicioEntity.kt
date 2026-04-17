@@ -16,7 +16,10 @@ class ExercicioEntity(
     val descricao: String,
 
     @Column(nullable = false)
-    val tipo: String = "LIVRE", // Armazena como String: "LIVRE" ou "MAQUINA"
+    val tipo: String,
+
+    @Column(nullable = false)
+    val grupoMuscular: String?,
 
     @Column(name = "maquina_id")
     val maquinaId: Long? = null // NULL se tipo for LIVRE
