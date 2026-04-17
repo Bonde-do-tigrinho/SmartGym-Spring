@@ -22,3 +22,7 @@ spring:
       include-message: always
       whitelabel:
         enabled: false
+
+app:
+  seed:
+    enabled: true
