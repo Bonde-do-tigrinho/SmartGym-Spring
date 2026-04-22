@@ -10,7 +10,7 @@ import java.time.LocalDate
 @Component
 @ConditionalOnProperty(prefix = "app.seed", name = ["enabled"], havingValue = "true")
 class DevelopmentDataSeeder(
-    private val alunoUseCase: AlunoUseCase,
+    private val usuarioUseCase: UsuarioUseCase,
     private val maquinaUseCase: MaquinaUseCase,
     private val exercicioUseCase: ExercicioUseCase,
     private val avaliacaoUseCase: AvaliacaoUseCase,
@@ -39,17 +39,18 @@ class DevelopmentDataSeeder(
         }
     }
 
-    private fun seedAlunos(): List<Aluno> {
-        val existentes = alunoUseCase.listar()
+    private fun seedAlunos(): List<Usuario> {
+        val existentes = usuarioUseCase.listar()
         if (existentes.isNotEmpty()) return existentes
 
         val base = listOf(
-            Aluno(id = null, nome = "Lucas Mendes", email = "lucas.mendes@smartgym.com", cpf = "11111111111", telefone = "11990000001", plano = "Mensal", status = true, treinoAtual = "Hipertrofia A", focoTreino = "Ganho de massa", planoVencimento = "2026-05-15", planoValor = 149.90),
-            Aluno(id = null, nome = "Fernanda Lima", email = "fernanda.lima@smartgym.com", cpf = "22222222222", telefone = "11990000002", plano = "Trimestral", status = true, treinoAtual = "Forca B", focoTreino = "Condicionamento", planoVencimento = "2026-07-10", planoValor = 399.90)
+            Usuario(id = null, nome = "Lucas Mendes", email = "lucas.mendes@smartgym.com", cpf = "11111111111", telefone = "11990000001", plano = "Mensal", status = true, treinoAtual = "Hipertrofia A", focoTreino = "Ganho de massa", planoVencimento = "2026-05-15", planoValor = 149.90, role = UserRole.ALUNO),
+            Usuario(id = null, nome = "Fernanda Lima", email = "fernanda.lima@smartgym.com", cpf = "22222222222", telefone = "11990000002", plano = "Trimestral", status = true, treinoAtual = "Forca B", focoTreino = "Condicionamento", planoVencimento = "2026-07-10", planoValor = 399.90, role = UserRole.ALUNO),
+            Usuario(id = null, nome = "Lucas Penteado", email = "lulu123@smartgym.com", cpf = "22222211112", telefone = "11990000002", plano = "Trimestral", status = true, treinoAtual = "Forca B", focoTreino = "Condicionamento", planoVencimento = "2026-07-10", planoValor = 399.90, role = UserRole.PROFESSOR)
         )
 
-        base.forEach { alunoUseCase.criar(it) }
-        return alunoUseCase.listar()
+        base.forEach { usuarioUseCase.criar(it) }
+        return usuarioUseCase.listar()
     }
 
     private fun seedMaquinas(): List<Maquina> {
@@ -87,9 +88,9 @@ class DevelopmentDataSeeder(
         base.forEach { exercicioUseCase.salvar(it) }
     }
 
-    private fun seedAvaliacoes(alunos: List<Aluno>) {
+    private fun seedAvaliacoes(usuarios: List<Usuario>) {
         if (avaliacaoUseCase.listarTodas().isNotEmpty()) return
-        val base = alunos.take(2).mapIndexedNotNull { index, aluno ->
+        val base = usuarios.take(2).mapIndexedNotNull { index, aluno ->
             val alunoId = aluno.id ?: return@mapIndexedNotNull null
             Avaliacao(alunoId = alunoId, nomeAluno = aluno.nome, dataAvaliacao = LocalDate.now().minusDays(index.toLong()), peso = if (index == 0) 78.5 else 62.0, percentualGordura = if (index == 0) 15.2 else 22.5, imc = if (index == 0) 25.6 else 22.8, nota = if (index == 0) "Boa evolucao. Manter treino atual." else "Iniciar treino de forca.")
         }

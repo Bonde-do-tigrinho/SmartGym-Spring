@@ -1,7 +1,10 @@
 package com.academia.smartgym.infrastructure.persistence.entities
 
+import com.academia.smartgym.domain.model.UserRole
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
@@ -9,8 +12,8 @@ import jakarta.persistence.OneToMany
 import jakarta.persistence.Table
 
 @Entity
-@Table(name = "alunos")
-data class AlunoEntity (
+@Table(name = "usuarios")
+data class UsuarioEntity (
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +22,8 @@ data class AlunoEntity (
     val nome: String,
     @Column(unique = true, nullable = false)
     val email: String,
-
+    @Enumerated(EnumType.STRING)
+    val role: UserRole = UserRole.ALUNO,
     val telefone: String,
 
     @Column(unique = true, nullable = false)
@@ -32,6 +36,6 @@ data class AlunoEntity (
     val planoVencimento: String?,
     val planoValor: Double?,
 
-    @OneToMany(mappedBy = "aluno")
+    @OneToMany(mappedBy = "usuario")
     val avaliacoes: List<AvaliacaoEntity> = emptyList()
 )
