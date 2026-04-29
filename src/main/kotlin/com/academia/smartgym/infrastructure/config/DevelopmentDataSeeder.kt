@@ -72,8 +72,8 @@ class DevelopmentDataSeeder(
         val segundaMaquinaId = maquinas.drop(1).firstOrNull()?.id ?: primeiraMaquinaId
 
         val base = mutableListOf(
-            Exercicio(nome = "Agachamento Livre", descricao = "3 series de 12 repeticoes", tipo = TipoExercicio.LIVRE, grupoMuscular = "quadriceps", maquinaId = null),
-            Exercicio(nome = "Prancha", descricao = "3 series de 40 segundos", tipo = TipoExercicio.LIVRE, grupoMuscular = "Abdomen", maquinaId = null)
+            Exercicio(nome = "Agachamento Livre", descricao = "Descrição do exercicio", tipo = TipoExercicio.LIVRE, grupoMuscular = "quadriceps", maquinaId = null),
+            Exercicio(nome = "Prancha", descricao = "Descrição do exercicio", tipo = TipoExercicio.LIVRE, grupoMuscular = "Abdomen", maquinaId = null)
         )
 
         if (primeiraMaquinaId != null) {
