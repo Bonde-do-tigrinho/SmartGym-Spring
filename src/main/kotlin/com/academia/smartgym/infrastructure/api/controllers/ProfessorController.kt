@@ -1,21 +1,23 @@
 package com.academia.smartgym.infrastructure.api.controllers
 
 import com.academia.smartgym.application.usecases.UsuarioUseCase
-import com.academia.smartgym.domain.model.UserRole
 import com.academia.smartgym.domain.model.Usuario
+import com.academia.smartgym.domain.model.UserRole
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/api/alunos")
-class AlunoController(
+@RequestMapping("/api/professores")
+class ProfessorController(
     private val useCase: UsuarioUseCase
 ) {
 
     @GetMapping
-    fun listar() = useCase.listarPorRole(UserRole.ALUNO)
+    fun listar() = useCase.listarPorRole(UserRole.PROFESSOR)
 
     @PostMapping
-    fun criar(@RequestBody usuario: Usuario) = useCase.criar(usuario.copy(role = UserRole.ALUNO))
+    fun criar(@RequestBody usuario: Usuario): Usuario {
+        return useCase.criar(usuario.copy(role = UserRole.PROFESSOR))
+    }
 
     @GetMapping("/{id}")
     fun buscar(@PathVariable id: Int) = useCase.buscar(id)
@@ -25,6 +27,6 @@ class AlunoController(
 
     @PutMapping("/{id}")
     fun atualizar(@PathVariable id: Int, @RequestBody usuario: Usuario): Usuario {
-        return useCase.atualizar(id, usuario.copy(role = UserRole.ALUNO))
+        return useCase.atualizar(id, usuario.copy(role = UserRole.PROFESSOR))
     }
 }

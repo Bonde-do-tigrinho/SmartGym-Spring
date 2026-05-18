@@ -10,12 +10,12 @@ class AvaliacaoEntity(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
 
-    @Column(name = "aluno_id", nullable = false)
+    @Column(name = "usuario_id", nullable = false)
     val alunoId: Int,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "aluno_id", referencedColumnName = "id", insertable = false, updatable = false)
-    val aluno: AlunoEntity? = null,
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id", insertable = false, updatable = false)
+    val usuario: UsuarioEntity? = null,
 
     @Column(nullable = false)
     val nomeAluno: String,

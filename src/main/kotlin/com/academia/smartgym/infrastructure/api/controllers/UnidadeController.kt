@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/unidades")
+@RequestMapping("/api/unidades")
 class UnidadeController(private val useCase: UnidadeUseCase) {
 
     @GetMapping
