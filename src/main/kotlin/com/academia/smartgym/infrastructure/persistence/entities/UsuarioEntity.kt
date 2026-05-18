@@ -25,7 +25,7 @@ data class UsuarioEntity (
     @Enumerated(EnumType.STRING)
     val role: UserRole = UserRole.ALUNO,
     val telefone: String,
-
+    val senha: String? = null,
     @Column(unique = true, nullable = false)
     val cpf: String,
     val plano: String? = null,
