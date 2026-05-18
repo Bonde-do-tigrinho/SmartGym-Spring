@@ -3,11 +3,13 @@ package com.academia.smartgym.application.usecases
 import com.academia.smartgym.domain.model.UserRole
 import com.academia.smartgym.domain.model.Usuario
 import com.academia.smartgym.domain.repository.UsuarioRepository
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service
 class UsuarioUseCase(
-    private val repository: UsuarioRepository
+    private val repository: UsuarioRepository,
+    private val passwordEncoder: PasswordEncoder
 ) {
 
     fun listar() = repository.findAll()
@@ -25,7 +27,20 @@ class UsuarioUseCase(
         if (repository.findByCpf(usuario.cpf) != null) {
             throw RuntimeException("Este CPF já está cadastrado.")
         }
-        return repository.save(usuario)
+
+        val senhaFinal = if (usuario.senha.isNullOrBlank()) {
+            val senhaGerada = gerarSenhaAleatoria()
+            println("SENHA GERADA PARA ${usuario.email}: $senhaGerada")
+            senhaGerada
+        } else {
+            usuario.senha
+        }
+
+        val usuarioProcessado = usuario.copy(
+            senha = passwordEncoder.encode(senhaFinal)
+        )
+
+        return repository.save(usuarioProcessado)
     }
 
     fun deletar(id: Int) = repository.deleteById(id)
@@ -33,5 +48,12 @@ class UsuarioUseCase(
     fun atualizar(id: Int, usuario: Usuario): Usuario {
         return repository.update(id, usuario)
             ?: throw RuntimeException("Usuario com id $id não encontrado para atualização")
+    }
+
+    private fun gerarSenhaAleatoria(): String {
+        val chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%"
+        return (1..8)
+            .map { chars.random() }
+            .joinToString("")
     }
 }

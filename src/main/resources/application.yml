@@ -2,7 +2,14 @@ server:
   address: 0.0.0.0
   port: 8080
 
+jwt:
+  secret: dGVzdGVTZWNyZXRLZXlTbWFydEd5bTEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2
+  expiration: 86400000
+
 spring:
+  security:
+    user:
+      name: admin
   datasource:
     url: jdbc:postgresql://localhost:5433/smartgym_db
     username: admin

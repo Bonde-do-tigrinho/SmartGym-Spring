@@ -2,6 +2,7 @@ package com.academia.smartgym.infrastructure.api.controllers
 
 import com.academia.smartgym.application.usecases.MaquinaUseCase
 import com.academia.smartgym.domain.model.Maquina
+import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -19,12 +20,12 @@ class MaquinaController(private val useCase: MaquinaUseCase) {
     fun getById(@PathVariable id: Long) = useCase.buscarPorId(id)
 
     @PostMapping
-    fun create(@RequestBody maquina: Maquina) = useCase.salvar(maquina)
+    fun create(@Valid @RequestBody maquina: Maquina) = useCase.salvar(maquina)
 
     @PutMapping("/{id}")
-    fun update(@PathVariable id: Long, @RequestBody maquina: Maquina) =
+    fun update(@Valid @PathVariable id: Long, @RequestBody maquina: Maquina) =
         useCase.salvar(maquina.copy(id = id))
 
     @DeleteMapping("/{id}")
-    fun delete(@PathVariable id: Long) = useCase.excluir(id)
+    fun delete(@Valid @PathVariable id: Long) = useCase.excluir(id)
 }

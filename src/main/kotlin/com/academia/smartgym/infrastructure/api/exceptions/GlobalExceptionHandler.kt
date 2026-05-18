@@ -3,6 +3,7 @@ package com.academia.smartgym.infrastructure.api.exceptions
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import java.time.LocalDateTime
@@ -23,6 +24,23 @@ class GlobalExceptionHandler {
             "path" to request.requestURI
         )
 
+        return ResponseEntity(body, HttpStatus.BAD_REQUEST)
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException::class)
+    fun handleValidationErrors(
+        ex: MethodArgumentNotValidException,
+        request: HttpServletRequest
+    ): ResponseEntity<Map<String, Any>> {
+        val errors = ex.bindingResult.fieldErrors.associate {
+            it.field to (it.defaultMessage ?: "Valor inválido")
+        }
+        val body = linkedMapOf<String, Any>(
+            "timestamp" to LocalDateTime.now().toString(),
+            "status" to HttpStatus.BAD_REQUEST.value(),
+            "errors" to errors,
+            "path" to request.requestURI
+        )
         return ResponseEntity(body, HttpStatus.BAD_REQUEST)
     }
 }

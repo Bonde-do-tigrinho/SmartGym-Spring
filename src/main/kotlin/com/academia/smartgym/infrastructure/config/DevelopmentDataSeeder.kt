@@ -20,12 +20,34 @@ class DevelopmentDataSeeder(
     override fun run(vararg args: String) {
         val alunos = seedAlunos()
         val maquinas = seedMaquinas()
+        seedAdmin()
 
         seedExercicios(maquinas)
         seedAvaliacoes(alunos)
         seedUnidades() // Chamada para criar as unidades fixas
     }
 
+    private fun seedAdmin() {
+        val existentes = usuarioUseCase.listar()
+        val adminExiste = existentes.any { it.role == UserRole.ADMIN }
+        if (adminExiste) return
+
+        usuarioUseCase.criar(
+            Usuario(
+                id = null,
+                nome = "Admin SmartGym",
+                email = "admin@smartgym.com",
+                cpf = "00000000000",
+                telefone = "11999999999",
+                role = UserRole.ADMIN,
+                senha = "admin123",
+                treinoAtual = null,
+                focoTreino = null,
+                planoVencimento = null,
+                planoValor = null
+            )
+        )
+    }
     private fun seedUnidades() {
         // Só insere se o banco de unidades estiver vazio
         if (unidadeUseCase.listarTodas().isEmpty()) {
