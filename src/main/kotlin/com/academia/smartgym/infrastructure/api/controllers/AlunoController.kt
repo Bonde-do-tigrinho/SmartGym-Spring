@@ -15,7 +15,7 @@ class AlunoController(
     fun listar() = useCase.listarPorRole(UserRole.ALUNO)
 
     @PostMapping
-    fun criar(@RequestBody usuario: Usuario) = useCase.criar(usuario.copy(userRole = UserRole.ALUNO))
+    fun criar(@RequestBody usuario: Usuario) = useCase.criar(usuario.copy(role = UserRole.ALUNO))
 
     @GetMapping("/{id}")
     fun buscar(@PathVariable id: Int) = useCase.buscar(id)
@@ -25,6 +25,6 @@ class AlunoController(
 
     @PutMapping("/{id}")
     fun atualizar(@PathVariable id: Int, @RequestBody usuario: Usuario): Usuario {
-        return useCase.atualizar(id, usuario.copy(userRole = UserRole.ALUNO))
+        return useCase.atualizar(id, usuario.copy(role = UserRole.ALUNO))
     }
 }

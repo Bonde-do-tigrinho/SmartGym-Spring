@@ -28,8 +28,8 @@ data class UsuarioEntity (
 
     @Column(unique = true, nullable = false)
     val cpf: String,
-    val plano: String,
-    val status: Boolean,
+    val plano: String? = null,
+    val status: Boolean? = true,
 
     val treinoAtual: String?,
     val focoTreino: String?,
