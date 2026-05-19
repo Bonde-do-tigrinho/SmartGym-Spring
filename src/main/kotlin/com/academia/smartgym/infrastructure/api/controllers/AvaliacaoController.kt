@@ -2,6 +2,7 @@ package com.academia.smartgym.infrastructure.api.controllers
 
 import com.academia.smartgym.application.usecases.AvaliacaoUseCase
 import com.academia.smartgym.domain.model.Avaliacao
+import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -19,16 +20,16 @@ class AvaliacaoController(private val useCase: AvaliacaoUseCase) {
     fun getById(@PathVariable id: Long) = useCase.buscarPorId(id)
 
     @PostMapping
-    fun create(@RequestBody avaliacao: Avaliacao) = useCase.salvar(avaliacao)
+    fun create(@Valid @RequestBody avaliacao: Avaliacao) = useCase.salvar(avaliacao)
 
     @PutMapping("/{id}")
-    fun update(@PathVariable id: Long, @RequestBody avaliacao: Avaliacao) =
+    fun update(@Valid @PathVariable id: Long, @RequestBody avaliacao: Avaliacao) =
         useCase.salvar(avaliacao.copy(id = id))
 
     @DeleteMapping("/{id}")
-    fun delete(@PathVariable id: Long) = useCase.excluir(id)
+    fun delete(@Valid @PathVariable id: Long) = useCase.excluir(id)
 
     @GetMapping("/aluno/{alunoId}")
-    fun getByAluno(@PathVariable alunoId: Int) = useCase.listarPorAluno(alunoId)
+    fun getByAluno(@Valid @PathVariable alunoId: Int) = useCase.listarPorAluno(alunoId)
 }
 

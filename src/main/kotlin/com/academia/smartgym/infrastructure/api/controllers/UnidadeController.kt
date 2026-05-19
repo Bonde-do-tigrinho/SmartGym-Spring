@@ -2,12 +2,13 @@ package com.academia.smartgym.infrastructure.api.controllers
 
 import com.academia.smartgym.application.usecases.UnidadeUseCase
 import com.academia.smartgym.domain.model.Unidade
+import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/unidades")
+@RequestMapping("/api/unidades")
 class UnidadeController(private val useCase: UnidadeUseCase) {
 
     @GetMapping
@@ -16,17 +17,17 @@ class UnidadeController(private val useCase: UnidadeUseCase) {
     }
 
     @PostMapping
-    fun criar(@RequestBody unidade: Unidade): ResponseEntity<Unidade> {
+    fun criar(@Valid @RequestBody unidade: Unidade): ResponseEntity<Unidade> {
         return ResponseEntity.status(HttpStatus.CREATED).body(useCase.salvar(unidade))
     }
 
     @PutMapping("/{id}")
-    fun atualizar(@PathVariable id: Long, @RequestBody unidade: Unidade): ResponseEntity<Unidade> {
+    fun atualizar(@Valid @PathVariable id: Long, @RequestBody unidade: Unidade): ResponseEntity<Unidade> {
         return ResponseEntity.ok(useCase.atualizar(id, unidade))
     }
 
     @DeleteMapping("/{id}")
-    fun deletar(@PathVariable id: Long): ResponseEntity<Void> {
+    fun deletar(@Valid @PathVariable id: Long): ResponseEntity<Void> {
         useCase.deletar(id)
         return ResponseEntity.noContent().build()
     }

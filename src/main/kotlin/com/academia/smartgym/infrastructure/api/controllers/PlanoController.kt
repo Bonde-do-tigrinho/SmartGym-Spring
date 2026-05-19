@@ -2,6 +2,7 @@ package com.academia.smartgym.infrastructure.api
 
 import com.academia.smartgym.domain.model.Plano
 import com.academia.smartgym.application.usecases.PlanoUseCase
+import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*
 class PlanoController(private val planoUseCase: PlanoUseCase) {
 
     @PostMapping
-    fun criar(@RequestBody plano: Plano): ResponseEntity<Plano> {
+    fun criar(@Valid @RequestBody plano: Plano): ResponseEntity<Plano> {
         val novo = planoUseCase.salvar(plano)
         return ResponseEntity(novo, HttpStatus.CREATED)
     }
@@ -29,7 +30,7 @@ class PlanoController(private val planoUseCase: PlanoUseCase) {
     }
 
     @PutMapping("/{id}")
-    fun atualizar(@PathVariable id: Long, @RequestBody plano: Plano): ResponseEntity<Plano> {
+    fun atualizar(@Valid @PathVariable id: Long, @RequestBody plano: Plano): ResponseEntity<Plano> {
         return try {
             ResponseEntity.ok(planoUseCase.atualizar(id, plano))
         } catch (e: RuntimeException) {
@@ -38,7 +39,7 @@ class PlanoController(private val planoUseCase: PlanoUseCase) {
     }
 
     @DeleteMapping("/{id}")
-    fun deletar(@PathVariable id: Long): ResponseEntity<Void> {
+    fun deletar(@Valid @PathVariable id: Long): ResponseEntity<Void> {
         planoUseCase.deletar(id)
         return ResponseEntity.noContent().build()
     }
