@@ -8,6 +8,7 @@ import com.academia.smartgym.domain.model.Usuario
 import com.academia.smartgym.domain.repository.UsuarioRepository
 import com.academia.smartgym.infrastructure.api.security.JwtService
 import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
@@ -20,26 +21,43 @@ class AuthUseCase(
     private val usuarioUseCase: UsuarioUseCase
 ) {
     fun login(request: AuthRequest): AuthResponse {
-        authenticationManager.authenticate(
-            UsernamePasswordAuthenticationToken(request.email, request.senha)
-        )
+        return autenticar(request, null)
+    }
+
+    fun loginProfessor(request: AuthRequest): AuthResponse {
+        return autenticar(request, UserRole.PROFESSOR)
+    }
+
+    private fun autenticar(request: AuthRequest, roleObrigatoria: UserRole?): AuthResponse {
+        try {
+            authenticationManager.authenticate(
+                UsernamePasswordAuthenticationToken(request.email, request.senha)
+            )
+        } catch (_: Exception) {
+            throw BadCredentialsException("E-mail ou senha inválidos")
+        }
 
         val usuario = usuarioRepository.findByEmail(request.email)
             ?: throw UsernameNotFoundException("Usuário não encontrado")
 
+        if (roleObrigatoria != null && usuario.role != roleObrigatoria) {
+            throw BadCredentialsException("Usuário não é ${roleObrigatoria.name}")
+        }
+
+        val role = usuario.role.name
         val token = jwtService.generateToken(
             username = usuario.email,
-            role = usuario.role?.name ?: "ALUNO"
+            role = role
         )
 
         return AuthResponse(
             token = token,
-            role = usuario.role?.name ?: "ALUNO",
+            role = role,
             nome = usuario.nome
         )
     }
 
-    fun registrar(request: RegisterRequest): Usuario{
+    fun registrar(request: RegisterRequest): Usuario {
         val novoUsuario = Usuario(
             id = null,
             nome = request.nome,

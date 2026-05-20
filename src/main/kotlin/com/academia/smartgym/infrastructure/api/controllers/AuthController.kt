@@ -22,6 +22,11 @@ class AuthController(
         return authUseCase.login(request)
     }
 
+    @PostMapping("/login/professor")
+    fun loginProfessor(@Valid @RequestBody request: AuthRequest): AuthResponse {
+        return authUseCase.loginProfessor(request)
+    }
+
     @PostMapping("/register")
     fun registrar(@Valid @RequestBody request: RegisterRequest): Usuario {
         return authUseCase.registrar(request)
