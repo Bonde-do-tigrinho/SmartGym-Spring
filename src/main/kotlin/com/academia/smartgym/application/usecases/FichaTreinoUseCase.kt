@@ -1,16 +1,15 @@
 package com.academia.smartgym.application.usecases
 
 import com.academia.smartgym.domain.model.FichaTreino
-import com.academia.smartgym.domain.repository.AlunoRepository
 import com.academia.smartgym.domain.repository.ExercicioRepository
+import com.academia.smartgym.domain.repository.UsuarioRepository
 import com.academia.smartgym.domain.repository.FichaTreinoRepository
 import org.springframework.stereotype.Service
-import kotlin.compareTo
 
 @Service
 class FichaTreinoUseCase(
     private val repository: FichaTreinoRepository,
-    private val alunoRepository: AlunoRepository,
+    private val alunoRepository: UsuarioRepository,
     private val exercicioRepository: ExercicioRepository
 ) {
     fun listarTodas() = repository.findAll()
