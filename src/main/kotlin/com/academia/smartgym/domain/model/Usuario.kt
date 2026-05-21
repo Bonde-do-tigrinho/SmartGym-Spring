@@ -39,5 +39,6 @@ data class Usuario(
     val treinoAtual: String? = null,
     val focoTreino: String? = null,
     val planoVencimento: String? = null,
-    val planoValor: Double? = null
+    val planoValor: Double? = null,
+    val emailVerificado: Boolean = false
 )
