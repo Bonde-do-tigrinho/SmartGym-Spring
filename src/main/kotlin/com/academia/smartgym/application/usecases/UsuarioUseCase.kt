@@ -59,6 +59,26 @@ class UsuarioUseCase(
         return usuarioCriado
     }
 
+    fun criarSemEmail(usuario: Usuario): Usuario {
+        if (repository.findByEmail(usuario.email) != null) {
+            throw RuntimeException("Este e-mail já está cadastrado.")
+        }
+
+        if (repository.findByCpf(usuario.cpf) != null) {
+            throw RuntimeException("Este CPF já está cadastrado.")
+        }
+
+        val senhaFinal = if (usuario.senha.isNullOrBlank()) {
+            gerarSenhaAleatoria()
+        } else {
+            usuario.senha
+        }
+
+        return repository.save(usuario.copy(
+            senha = passwordEncoder.encode(senhaFinal)
+        ))
+    }
+
     fun deletar(id: Int) = repository.deleteById(id)
 
     fun atualizar(id: Int, usuario: Usuario): Usuario {

@@ -32,7 +32,7 @@ class DevelopmentDataSeeder(
         val adminExiste = existentes.any { it.role == UserRole.ADMIN }
         if (adminExiste) return
 
-        usuarioUseCase.criar(
+        usuarioUseCase.criarSemEmail(
             Usuario(
                 id = null,
                 nome = "Admin SmartGym",
@@ -71,7 +71,7 @@ class DevelopmentDataSeeder(
             Usuario(id = null, nome = "Lucas Penteado", email = "lulu123@smartgym.com", cpf = "22222211112", telefone = "11990000002", plano = "Trimestral", status = true, treinoAtual = "Forca B", focoTreino = "Condicionamento", planoVencimento = "2026-07-10", planoValor = 399.90, role = UserRole.PROFESSOR)
         )
 
-        base.forEach { usuarioUseCase.criar(it) }
+        base.forEach { usuarioUseCase.criarSemEmail(it) }
         return usuarioUseCase.listar()
     }
 
