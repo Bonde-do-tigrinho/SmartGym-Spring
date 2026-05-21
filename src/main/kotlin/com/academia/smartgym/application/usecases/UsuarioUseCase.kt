@@ -3,13 +3,15 @@ package com.academia.smartgym.application.usecases
 import com.academia.smartgym.domain.model.UserRole
 import com.academia.smartgym.domain.model.Usuario
 import com.academia.smartgym.domain.repository.UsuarioRepository
+import com.academia.smartgym.infrastructure.api.security.services.EmailService
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service
 class UsuarioUseCase(
     private val repository: UsuarioRepository,
-    private val passwordEncoder: PasswordEncoder
+    private val passwordEncoder: PasswordEncoder,
+    private val emailService: EmailService
 ) {
 
     fun listar() = repository.findAll()
@@ -28,11 +30,15 @@ class UsuarioUseCase(
             throw RuntimeException("Este CPF já está cadastrado.")
         }
 
+        val senhaGeradaPeloSistema: String?
+
         val senhaFinal = if (usuario.senha.isNullOrBlank()) {
             val senhaGerada = gerarSenhaAleatoria()
             println("SENHA GERADA PARA ${usuario.email}: $senhaGerada")
+            senhaGeradaPeloSistema = senhaGerada
             senhaGerada
         } else {
+            senhaGeradaPeloSistema = null
             usuario.senha
         }
 
@@ -40,7 +46,17 @@ class UsuarioUseCase(
             senha = passwordEncoder.encode(senhaFinal)
         )
 
-        return repository.save(usuarioProcessado)
+        val usuarioCriado = repository.save(usuarioProcessado)
+
+        if (senhaGeradaPeloSistema != null) {
+            emailService.enviarSenhaParaNovoUsuario(
+                nome = usuarioCriado.nome,
+                email = usuarioCriado.email,
+                senha = senhaGeradaPeloSistema
+            )
+        }
+
+        return usuarioCriado
     }
 
     fun deletar(id: Int) = repository.deleteById(id)

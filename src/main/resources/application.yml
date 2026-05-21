@@ -7,14 +7,28 @@ jwt:
   expiration: 86400000
 
 spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: seuemail@gmail.com
+    password: sua-senha-de-app
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
   security:
     user:
       name: admin
+
   datasource:
     url: jdbc:postgresql://localhost:5433/smartgym_db
     username: admin
     password: admin
     driver-class-name: org.postgresql.Driver
+
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
@@ -23,6 +37,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
   web:
     error:
       include-stacktrace: never

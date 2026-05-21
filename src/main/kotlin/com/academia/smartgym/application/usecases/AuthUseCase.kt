@@ -7,6 +7,7 @@ import com.academia.smartgym.domain.model.UserRole
 import com.academia.smartgym.domain.model.Usuario
 import com.academia.smartgym.domain.repository.UsuarioRepository
 import com.academia.smartgym.infrastructure.api.security.JwtService
+import com.academia.smartgym.infrastructure.api.security.services.EmailService
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.userdetails.UsernameNotFoundException
@@ -17,7 +18,8 @@ class AuthUseCase(
     private val usuarioRepository: UsuarioRepository,
     private val jwtService: JwtService,
     private val authenticationManager: AuthenticationManager,
-    private val usuarioUseCase: UsuarioUseCase
+    private val usuarioUseCase: UsuarioUseCase,
+    private val emailService: EmailService
 ) {
     fun login(request: AuthRequest): AuthResponse {
         authenticationManager.authenticate(
@@ -52,10 +54,15 @@ class AuthUseCase(
             planoVencimento = null,
             focoTreino = null,
             treinoAtual = null,
-            plano = null,
-            planoValor = null,
+            plano = "Basic",
+            planoValor = 0.0,
         )
 
-        return usuarioUseCase.criar(novoUsuario)
+        val usuarioCriado = usuarioUseCase.criar(novoUsuario)
+
+        emailService.enviarBoasVindas(usuarioCriado.nome, usuarioCriado.email)
+
+
+        return usuarioCriado
     }
 }
