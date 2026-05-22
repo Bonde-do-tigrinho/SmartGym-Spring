@@ -1,8 +1,7 @@
 package com.academia.smartgym.infrastructure.persistence.entities
 
+import com.academia.smartgym.domain.model.Plano
 import jakarta.persistence.*
-import java.time.LocalDate
-import java.time.LocalTime
 
 @Entity
 @Table(name = "planos")

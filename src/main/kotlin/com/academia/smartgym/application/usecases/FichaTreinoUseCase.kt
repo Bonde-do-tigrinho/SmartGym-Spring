@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 @Service
 class FichaTreinoUseCase(
     private val repository: FichaTreinoRepository,
-    private val alunoRepository: UsuarioRepository,
+    private val usuarioRepository: UsuarioRepository,
     private val exercicioRepository: ExercicioRepository
 ) {
     fun listarTodas() = repository.findAll()

@@ -21,14 +21,10 @@ class AuthController(
 ) {
 
     @PostMapping("/login")
-    fun login(@Valid @RequestBody request: AuthRequest): AuthResponse {
-        return authUseCase.login(request)
+    fun login(@Valid @RequestBody request: AuthRequest): ResponseEntity<AuthResponse> {
+        return ResponseEntity.ok(authUseCase.login(request))
     }
 
-    @PostMapping("/login/professor")
-    fun loginProfessor(@Valid @RequestBody request: AuthRequest): AuthResponse {
-        return authUseCase.loginProfessor(request)
-    }
 
     @PostMapping("/register")
     fun registrar(@Valid @RequestBody request: RegisterRequest): Usuario {

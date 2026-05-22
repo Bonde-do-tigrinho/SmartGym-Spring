@@ -103,6 +103,8 @@ class SecurityConfig(
                     .requestMatchers(HttpMethod.PUT, "/api/unidades/{id}").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.DELETE, "/api/unidades/{id}").hasRole("ADMIN")
 
+                    .requestMatchers(HttpMethod.GET, "/api/usuarios/me").authenticated()
+
                     .anyRequest().authenticated()
             }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
