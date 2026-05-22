@@ -44,7 +44,8 @@ class DevelopmentDataSeeder(
                 treinoAtual = null,
                 focoTreino = null,
                 planoVencimento = null,
-                planoValor = null
+                planoValor = null,
+                emailVerificado = true
             )
         )
     }
@@ -66,9 +67,9 @@ class DevelopmentDataSeeder(
         if (existentes.isNotEmpty()) return existentes
 
         val base = listOf(
-            Usuario(id = null, nome = "Lucas Mendes", email = "lucas.mendes@smartgym.com", cpf = "11111111111", telefone = "11990000001", plano = "Mensal", status = true, treinoAtual = "Hipertrofia A", focoTreino = "Ganho de massa", planoVencimento = "2026-05-15", planoValor = 149.90, role = UserRole.ALUNO),
-            Usuario(id = null, nome = "Fernanda Lima", email = "fernanda.lima@smartgym.com", cpf = "22222222222", telefone = "11990000002", plano = "Trimestral", status = true, treinoAtual = "Forca B", focoTreino = "Condicionamento", planoVencimento = "2026-07-10", planoValor = 399.90, role = UserRole.ALUNO),
-            Usuario(id = null, nome = "Lucas Penteado", email = "lulu123@smartgym.com", cpf = "22222211112", telefone = "11990000002", plano = "Trimestral", status = true, treinoAtual = "Forca B", focoTreino = "Condicionamento", planoVencimento = "2026-07-10", planoValor = 399.90, role = UserRole.PROFESSOR)
+            Usuario(id = null, nome = "Lucas Mendes", email = "lucas.mendes@smartgym.com", cpf = "11111111111", telefone = "11990000001", plano = "Mensal", status = true, treinoAtual = "Hipertrofia A", focoTreino = "Ganho de massa", planoVencimento = "2026-05-15", planoValor = 149.90, role = UserRole.ALUNO, emailVerificado = true),
+            Usuario(id = null, nome = "Fernanda Lima", email = "fernanda.lima@smartgym.com", cpf = "22222222222", telefone = "11990000002", plano = "Trimestral", status = true, treinoAtual = "Forca B", focoTreino = "Condicionamento", planoVencimento = "2026-07-10", planoValor = 399.90, role = UserRole.ALUNO, emailVerificado = true),
+            Usuario(id = null, nome = "Lucas Penteado", email = "lulu123@smartgym.com", cpf = "22222211112", telefone = "11990000002", plano = "Trimestral", status = true, treinoAtual = "Forca B", focoTreino = "Condicionamento", planoVencimento = "2026-07-10", planoValor = 399.90, role = UserRole.PROFESSOR, emailVerificado = true)
         )
 
         base.forEach { usuarioUseCase.criarSemEmail(it) }

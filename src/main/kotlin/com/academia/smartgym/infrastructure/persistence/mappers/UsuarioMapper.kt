@@ -18,6 +18,7 @@ object UsuarioMapper {
         planoVencimento = entity.planoVencimento,
         planoValor = entity.planoValor,
         role = entity.role,
+        emailVerificado = entity.emailVerificado
     )
 
     fun toEntity(domain: Usuario) = UsuarioEntity(
@@ -34,5 +35,6 @@ object UsuarioMapper {
         planoVencimento = domain.planoVencimento,
         planoValor = domain.planoValor,
         role = domain.role,
+        emailVerificado = domain.emailVerificado
     )
 }

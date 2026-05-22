@@ -44,10 +44,66 @@ class SecurityConfig(
             .authorizeHttpRequests {
                 it
                     .requestMatchers("/api/auth/**").permitAll()
-                    .requestMatchers(HttpMethod.POST, "/api/alunos").hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.POST, "/api/professores").hasRole("ADMIN")
-                    .anyRequest().authenticated()
 
+                    //AlunoController
+                    .requestMatchers(HttpMethod.GET, "/api/alunos").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.POST, "/api/alunos").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/api/alunos/{id}").hasAnyRole("ADMIN", "ALUNO")
+                    .requestMatchers(HttpMethod.POST, "/api/alunos").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.PUT, "/api/alunos/{id}").hasAnyRole("ADMIN", "ALUNO")
+                    .requestMatchers(HttpMethod.DELETE, "/api/alunos/{id}").hasRole("ADMIN")
+
+                    //ProfessorController
+                    .requestMatchers(HttpMethod.GET, "/api/professores").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/api/professores/{id}").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.POST, "/api/professores").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.PUT, "/api/professores/{id}").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.DELETE, "/api/professores/{id}").hasRole("ADMIN")
+
+                    //AvaliacoesController
+                    .requestMatchers(HttpMethod.GET, "/api/avaliacoes").hasRole( "PROFESSOR")
+                    .requestMatchers(HttpMethod.GET, "/api/avaliacoes/{id}").hasAnyRole( "PROFESSOR", "ALUNO")
+                    .requestMatchers(HttpMethod.GET, "/api/avaliacoes/aluno/{alunoId}").hasAnyRole( "PROFESSOR", "ALUNO")
+                    .requestMatchers(HttpMethod.POST, "/api/avaliacoes").hasRole( "PROFESSOR")
+                    .requestMatchers(HttpMethod.PUT, "/api/avaliacoes/{id}").hasRole( "PROFESSOR")
+                    .requestMatchers(HttpMethod.DELETE, "/api/avaliacoes/{id}").hasRole( "PROFESSOR")
+
+                    //ExerciciosController
+                    .requestMatchers(HttpMethod.GET, "/api/exercicios").hasAnyRole("PROFESSOR", "ALUNO")
+                    .requestMatchers(HttpMethod.GET, "/api/exercicios/{id}").hasAnyRole("PROFESSOR", "ALUNO")
+                    .requestMatchers(HttpMethod.GET, "/api/exercicios/maquina/{maquinaId}").hasAnyRole("PROFESSOR", "ALUNO")
+                    .requestMatchers(HttpMethod.POST, "/api/exercicios").hasRole("PROFESSOR")
+                    .requestMatchers(HttpMethod.PUT, "/api/exercicios/{id}").hasRole("PROFESSOR")
+                    .requestMatchers(HttpMethod.DELETE, "/api/exercicios/{id}").hasRole("PROFESSOR")
+
+                    //FichaTreinoController
+                    .requestMatchers(HttpMethod.GET, "/api/fichas-treino").hasAnyRole("PROFESSOR", "ALUNO")
+                    .requestMatchers(HttpMethod.GET, "/api/fichas-treino/{id}").hasAnyRole("PROFESSOR", "ALUNO")
+                    .requestMatchers(HttpMethod.POST, "/api/fichas-treino").hasRole("PROFESSOR")
+                    .requestMatchers(HttpMethod.PUT, "/api/fichas-treino/{id}").hasRole("PROFESSOR")
+                    .requestMatchers(HttpMethod.DELETE, "/api/fichas-treino/{id}").hasRole("PROFESSOR")
+
+                    //MaquinaController
+                    .requestMatchers(HttpMethod.GET, "/api/maquinas").hasAnyRole("ADMIN", "PROFESSOR", "ALUNO")
+                    .requestMatchers(HttpMethod.GET, "/api/maquinas/{id}").hasAnyRole("ADMIN", "PROFESSOR", "ALUNO")
+                    .requestMatchers(HttpMethod.POST, "/api/maquinas").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.PUT, "/api/maquinas/{id}").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.DELETE, "/api/maquinas/{id}").hasRole("ADMIN")
+
+                    //PlanoController
+                    .requestMatchers(HttpMethod.GET, "/api/planos").hasAnyRole("ADMIN", "PROFESSOR", "ALUNO")
+                    .requestMatchers(HttpMethod.GET, "/api/planos/{id}").hasAnyRole("ADMIN", "PROFESSOR", "ALUNO")
+                    .requestMatchers(HttpMethod.POST, "/api/planos").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.PUT, "/api/planos/{id}").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.DELETE, "/api/planos/{id}").hasRole("ADMIN")
+
+                    //UnidadeController
+                    .requestMatchers(HttpMethod.GET, "/api/unidades").hasAnyRole("ADMIN", "PROFESSOR", "ALUNO")
+                    .requestMatchers(HttpMethod.POST, "/api/unidades").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.PUT, "/api/unidades/{id}").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.DELETE, "/api/unidades/{id}").hasRole("ADMIN")
+
+                    .anyRequest().authenticated()
             }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .authenticationProvider(authenticationProvider())
