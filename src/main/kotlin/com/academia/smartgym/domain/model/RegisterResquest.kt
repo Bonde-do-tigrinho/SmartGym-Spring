@@ -3,6 +3,7 @@ package com.academia.smartgym.domain.model
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
+import java.time.LocalDateTime
 
 data class RegisterRequest(
     @field:NotBlank(message = "Nome é obrigatório")
@@ -24,4 +25,11 @@ data class RegisterRequest(
     @field:NotBlank(message = "Senha é obrigatória")
     @field:Size(min = 6, message = "Senha deve ter no mínimo 6 caracteres")
     val senha: String
+)
+
+data class PasswordResetToken(
+    val id: Int? = null,
+    val token: String,
+    val usuarioId: Int,
+    val expiracao: LocalDateTime
 )

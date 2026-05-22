@@ -5,26 +5,30 @@ import com.academia.smartgym.domain.repository.PlanoRepository
 import org.springframework.stereotype.Service
 
 @Service
-class PlanoUseCase(private val repository: PlanoRepository) {
+class PlanoUseCase(private val planoRepository: PlanoRepository) {
 
-    fun salvar(plano: Plano): Plano = repository.save(plano)
+    fun findAll(): List<Plano> = planoRepository.findAll()
 
-    fun listarTodos(): List<Plano> = repository.findAll()
+    fun findById(id: Long): Plano? = planoRepository.findById(id)
 
-    fun buscarPorId(id: Long): Plano? = repository.findById(id).orElse(null)
+    fun create(plano: Plano): Plano = planoRepository.save(plano)
 
-    fun atualizar(id: Long, planoAtualizado: Plano): Plano {
-        val planoExistente = repository.findById(id).orElseThrow { RuntimeException("Plano não encontrado") }
+    fun update(id: Long, planoAtualizado: Plano): Plano {
+        val planoExistente = planoRepository.findById(id) ?: throw RuntimeException("Plano não encontrado")
 
-        planoExistente.nome = planoAtualizado.nome
-        planoExistente.ativo = planoAtualizado.ativo
-        planoExistente.dataFimPromocao = planoAtualizado.dataFimPromocao
-        planoExistente.horarioLimiteAcesso = planoAtualizado.horarioLimiteAcesso
+        val updatedPlano = planoExistente.copy(
+            nome = planoAtualizado.nome,
+            descricao = planoAtualizado.descricao,
+            valor = planoAtualizado.valor,
+            duracaoMeses = planoAtualizado.duracaoMeses,
+            ativo = planoAtualizado.ativo
+        )
 
-        return repository.save(planoExistente)
+        return planoRepository.save(updatedPlano)
     }
 
-    fun deletar(id: Long) {
-        repository.deleteById(id)
+    fun delete(id: Long) {
+        planoRepository.findById(id) ?: throw RuntimeException("Plano não encontrado")
+        planoRepository.deleteById(id)
     }
 }

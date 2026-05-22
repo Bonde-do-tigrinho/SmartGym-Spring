@@ -1,14 +1,8 @@
 package com.academia.smartgym.domain.model
 
-import jakarta.persistence.*
-import jakarta.validation.constraints.NotBlank
-import jakarta.validation.constraints.NotNull
-import jakarta.validation.constraints.Size
 import java.time.LocalDate
 import java.time.LocalTime
 
-@Entity
-@Table(name = "planos")
 data class Plano(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

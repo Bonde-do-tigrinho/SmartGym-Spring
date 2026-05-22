@@ -2,16 +2,21 @@ package com.academia.smartgym.application.usecases
 
 import com.academia.smartgym.domain.model.UserRole
 import com.academia.smartgym.domain.model.Usuario
+import com.academia.smartgym.domain.model.VerificationToken
 import com.academia.smartgym.domain.repository.UsuarioRepository
+import com.academia.smartgym.domain.repository.VerificationTokenRepository
 import com.academia.smartgym.infrastructure.api.security.services.EmailService
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
+import java.util.UUID
 
 @Service
 class UsuarioUseCase(
     private val repository: UsuarioRepository,
     private val passwordEncoder: PasswordEncoder,
-    private val emailService: EmailService
+    private val emailService: EmailService,
+    private val verificationTokenRepository: VerificationTokenRepository
 ) {
 
     fun listar() = repository.findAll()
@@ -21,7 +26,7 @@ class UsuarioUseCase(
     fun buscar(id: Int) =
         repository.findById(id) ?: throw RuntimeException("Usuario não encontrado")
 
-    fun criar(usuario: Usuario): Usuario{
+    fun criar(usuario: Usuario): Usuario {
         if (repository.findByEmail(usuario.email) != null) {
             throw RuntimeException("Este e-mail já está cadastrado.")
         }
@@ -43,11 +48,13 @@ class UsuarioUseCase(
         }
 
         val usuarioProcessado = usuario.copy(
-            senha = passwordEncoder.encode(senhaFinal)
+            senha = passwordEncoder.encode(senhaFinal),
+            emailVerificado = false
         )
 
         val usuarioCriado = repository.save(usuarioProcessado)
 
+        // ✅ envia email com a senha gerada pelo sistema
         if (senhaGeradaPeloSistema != null) {
             emailService.enviarSenhaParaNovoUsuario(
                 nome = usuarioCriado.nome,
@@ -55,6 +62,16 @@ class UsuarioUseCase(
                 senha = senhaGeradaPeloSistema
             )
         }
+
+        val token = UUID.randomUUID().toString()
+        verificationTokenRepository.salvar(
+            VerificationToken(
+                token = token,
+                usuarioId = usuarioCriado.id!!,
+                expiracao = LocalDateTime.now().plusHours(24)
+            )
+        )
+        emailService.enviarVerificacaoEmail(usuarioCriado.nome, usuarioCriado.email, token)
 
         return usuarioCriado
     }

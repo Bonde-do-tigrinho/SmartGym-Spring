@@ -28,7 +28,6 @@ data class Usuario(
     val cpf: String,
 
     @field:NotBlank(message = "Telefone é obrigatório")
-    @field:Size(min = 10, max = 11, message = "Telefone deve ter entre 10 e 11 dígitos")
     val telefone: String,
 
     @field:Size(min = 6, message = "Senha deve ter no mínimo 6 caracteres")

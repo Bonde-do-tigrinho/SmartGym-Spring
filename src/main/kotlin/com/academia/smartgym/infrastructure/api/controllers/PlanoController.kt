@@ -1,7 +1,7 @@
-package com.academia.smartgym.infrastructure.api
+package com.academia.smartgym.infrastructure.api.controllers
 
-import com.academia.smartgym.domain.model.Plano
 import com.academia.smartgym.application.usecases.PlanoUseCase
+import com.academia.smartgym.domain.model.Plano
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -9,38 +9,42 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/planos")
-@CrossOrigin(origins = ["*"])
 class PlanoController(private val planoUseCase: PlanoUseCase) {
 
     @PostMapping
-    fun criar(@Valid @RequestBody plano: Plano): ResponseEntity<Plano> {
-        val novo = planoUseCase.salvar(plano)
-        return ResponseEntity(novo, HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.CREATED)
+    fun createPlano(@Valid @RequestBody plano: Plano): Plano {
+        return planoUseCase.create(plano)
     }
 
     @GetMapping
-    fun listar(): ResponseEntity<List<Plano>> {
-        return ResponseEntity.ok(planoUseCase.listarTodos())
+    fun getAllPlanos(): List<Plano> {
+        return planoUseCase.findAll()
     }
 
     @GetMapping("/{id}")
-    fun buscar(@PathVariable id: Long): ResponseEntity<Plano> {
-        val plano = planoUseCase.buscarPorId(id)
-        return if (plano != null) ResponseEntity.ok(plano) else ResponseEntity.notFound().build()
+    fun getPlanoById(@PathVariable id: Long): ResponseEntity<Plano> {
+        val plano = planoUseCase.findById(id)
+        return if (plano != null) {
+            ResponseEntity.ok(plano)
+        } else {
+            ResponseEntity.notFound().build()
+        }
     }
 
     @PutMapping("/{id}")
-    fun atualizar(@Valid @PathVariable id: Long, @RequestBody plano: Plano): ResponseEntity<Plano> {
+    fun updatePlano(@PathVariable id: Long, @Valid @RequestBody plano: Plano): ResponseEntity<Plano> {
         return try {
-            ResponseEntity.ok(planoUseCase.atualizar(id, plano))
+            val updatedPlano = planoUseCase.update(id, plano)
+            ResponseEntity.ok(updatedPlano)
         } catch (e: RuntimeException) {
             ResponseEntity.notFound().build()
         }
     }
 
     @DeleteMapping("/{id}")
-    fun deletar(@Valid @PathVariable id: Long): ResponseEntity<Void> {
-        planoUseCase.deletar(id)
-        return ResponseEntity.noContent().build()
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun deletePlano(@PathVariable id: Long) {
+        planoUseCase.delete(id)
     }
 }

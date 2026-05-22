@@ -30,7 +30,8 @@ data class UsuarioEntity (
     val cpf: String,
     val plano: String? = null,
     val status: Boolean? = true,
-
+    @Column(name = "email_verificado", nullable = false)
+    val emailVerificado: Boolean = false,
     val treinoAtual: String?,
     val focoTreino: String?,
     val planoVencimento: String?,
