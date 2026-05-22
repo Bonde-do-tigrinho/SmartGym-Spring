@@ -1,27 +1,30 @@
 package com.academia.smartgym.domain.model
 
-import java.time.LocalDate
-import java.time.LocalTime
+import jakarta.validation.constraints.DecimalMin
+import jakarta.validation.constraints.Min
+import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.NotNull
+import jakarta.validation.constraints.Size
 
 data class Plano(
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
+    val id: Int? = null,
 
-    @Column(nullable = false)
-    @field:NotBlank(message = "Nome é obrigatório!")
-    @field:Size(min = 3, message = "Nome deve ter no mínimo 3 caracteres")
-    var nome: String,
+    @field:NotBlank(message = "Nome é obrigatório")
+    @field:Size(min = 2, max = 100, message = "Nome deve ter entre 2 e 100 caracteres")
+    val nome: String,
 
-    @field:NotNull(message = "É necessário definir se o plano está ativo ou não!")
-    @Column(nullable = false)
-    var ativo: Boolean,
+    @field:NotBlank(message = "Descrição é obrigatória")
+    @field:Size(max = 500, message = "Descrição deve ter no máximo 500 caracteres")
+    val descricao: String,
 
-    @field:NotNull(message = "Data fim da promoção é obrigatória!")
-    @Column(nullable = false)
-    var dataFimPromocao: LocalDate,
+    @field:NotNull(message = "Valor é obrigatório")
+    @field:DecimalMin(value = "0.0", inclusive = false, message = "Valor deve ser maior que zero")
+    val valor: Double,
 
-    @field:NotNull(message = "Horário limite de acesso é obrigatório!")
-    @Column(nullable = false)
-    var horarioLimiteAcesso: LocalTime
+    @field:NotNull(message = "Duração é obrigatória")
+    @field:Min(value = 1, message = "Duração deve ser de no mínimo 1 mês")
+    val duracaoMeses: Int,
+
+    @field:NotNull(message = "Status é obrigatório")
+    val ativo: Boolean
 )

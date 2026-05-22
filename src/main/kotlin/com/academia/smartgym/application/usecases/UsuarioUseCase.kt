@@ -54,7 +54,6 @@ class UsuarioUseCase(
 
         val usuarioCriado = repository.save(usuarioProcessado)
 
-        // ✅ envia email com a senha gerada pelo sistema
         if (senhaGeradaPeloSistema != null) {
             emailService.enviarSenhaParaNovoUsuario(
                 nome = usuarioCriado.nome,
@@ -108,5 +107,10 @@ class UsuarioUseCase(
         return (1..8)
             .map { chars.random() }
             .joinToString("")
+    }
+
+    fun buscarPorEmail(email: String): Usuario {
+        return repository.findByEmail(email)
+            ?: throw RuntimeException("Usuário não encontrado")
     }
 }

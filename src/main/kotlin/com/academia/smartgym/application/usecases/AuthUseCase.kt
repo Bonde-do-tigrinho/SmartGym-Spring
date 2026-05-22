@@ -46,14 +46,14 @@ class AuthUseCase(
 
         val token = jwtService.generateToken(
             username = usuario.email,
-            role = role
+            role = usuario.role?.name ?: "ALUNO"
         )
 
         return AuthResponse(
             token = token,
-            role = role,
-            nome = usuario.nome
-        )
+            role = usuario.role?.name ?: "ALUNO",
+            nome = usuario.nome,
+            )
     }
 
     fun registrar(request: RegisterRequest): Usuario {
@@ -138,7 +138,6 @@ class AuthUseCase(
 
         usuario.id?.let { passwordResetTokenRepository.deletarPorUsuarioId(it) }
 
-        // ✅ gera novo token
         val token = UUID.randomUUID().toString()
         passwordResetTokenRepository.salvar(
             PasswordResetToken(
