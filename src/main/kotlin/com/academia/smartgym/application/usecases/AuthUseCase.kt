@@ -13,6 +13,7 @@ import com.academia.smartgym.domain.repository.VerificationTokenRepository
 import com.academia.smartgym.infrastructure.api.security.JwtService
 import com.academia.smartgym.infrastructure.api.security.services.EmailService
 import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -45,12 +46,12 @@ class AuthUseCase(
 
         val token = jwtService.generateToken(
             username = usuario.email,
-            role = usuario.role?.name ?: "ALUNO"
+            role = role
         )
 
         return AuthResponse(
             token = token,
-            role = usuario.role?.name ?: "ALUNO",
+            role = role,
             nome = usuario.nome
         )
     }

@@ -1,8 +1,10 @@
 package com.academia.smartgym.domain.repository
 
 import com.academia.smartgym.domain.model.Plano
-import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.stereotype.Repository
 
-@Repository
-interface PlanoRepository : JpaRepository<Plano, Long>
+interface PlanoRepository {
+    fun findAll(): List<Plano>
+    fun findById(id: Long): Plano?
+    fun save(plano: Plano): Plano
+    fun deleteById(id: Long)
+}
