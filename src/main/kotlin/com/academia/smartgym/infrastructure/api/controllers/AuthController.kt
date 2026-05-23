@@ -27,8 +27,12 @@ class AuthController(
 
 
     @PostMapping("/register")
-    fun registrar(@Valid @RequestBody request: RegisterRequest): Usuario {
-        return authUseCase.registrar(request)
+    fun registrar(@Valid @RequestBody request: RegisterRequest): ResponseEntity<Map<String, Any>> {
+        authUseCase.registrar(request)
+        return ResponseEntity.ok(mapOf(
+            "sucesso" to true,
+            "mensagem" to "Cadastro realizado! Verifique seu email para ativar sua conta."
+        ))
     }
 
     @GetMapping("/verificar")
