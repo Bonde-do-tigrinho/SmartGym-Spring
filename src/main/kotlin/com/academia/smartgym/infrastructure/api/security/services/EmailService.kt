@@ -98,7 +98,7 @@ class EmailService(private val mailSender: JavaMailSender) {
         val message = mailSender.createMimeMessage()
         val helper = MimeMessageHelper(message, true, "UTF-8")
 
-        val link = "http://localhost:8080/api/auth/resetar-senha?token=$token"
+        val link = "http://localhost:8080/api/auth/resetar-senha?token=\$token"
 
         helper.setFrom("equipesmartgym@gmail.com")
         helper.setTo(email)

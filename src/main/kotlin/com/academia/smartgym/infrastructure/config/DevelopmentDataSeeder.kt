@@ -14,17 +14,18 @@ class DevelopmentDataSeeder(
     private val maquinaUseCase: MaquinaUseCase,
     private val exercicioUseCase: ExercicioUseCase,
     private val avaliacaoUseCase: AvaliacaoUseCase,
-    private val unidadeUseCase: UnidadeUseCase // Adicionado para as Unidades
+    private val unidadeUseCase: UnidadeUseCase,
+    private val planoUseCase: PlanoUseCase
 ) : CommandLineRunner {
 
     override fun run(vararg args: String) {
         val alunos = seedAlunos()
         val maquinas = seedMaquinas()
         seedAdmin()
-
         seedExercicios(maquinas)
         seedAvaliacoes(alunos)
-        seedUnidades() // Chamada para criar as unidades fixas
+        seedUnidades()
+        seedPlanos()
     }
 
     private fun seedAdmin() {
@@ -50,7 +51,6 @@ class DevelopmentDataSeeder(
         )
     }
     private fun seedUnidades() {
-        // Só insere se o banco de unidades estiver vazio
         if (unidadeUseCase.listarTodas().isEmpty()) {
             val base = listOf(
                 Unidade(id = null, nome = "Unidade Centro", endereco = "Rua Principal, 123", cidade = "São Paulo - SP"),
@@ -118,5 +118,42 @@ class DevelopmentDataSeeder(
             Avaliacao(alunoId = alunoId, nomeAluno = aluno.nome, dataAvaliacao = LocalDate.now().minusDays(index.toLong()), peso = if (index == 0) 78.5 else 62.0, percentualGordura = if (index == 0) 15.2 else 22.5, imc = if (index == 0) 25.6 else 22.8, nota = if (index == 0) "Boa evolucao. Manter treino atual." else "Iniciar treino de forca.")
         }
         base.forEach { avaliacaoUseCase.salvar(it) }
+    }
+
+    private fun seedPlanos(){
+        if (planoUseCase.findAll().isNotEmpty()) return
+
+        val base = listOf(
+            Plano(
+                nome = "Mensal",
+                descricao = "Acesso completo à academia por 1 mês",
+                valor = 149.90,
+                duracaoMeses = 1,
+                ativo = true
+            ),
+            Plano(
+                nome = "Trimestral",
+                descricao = "Acesso completo à academia por 3 meses com desconto",
+                valor = 399.90,
+                duracaoMeses = 3,
+                ativo = true
+            ),
+            Plano(
+                nome = "Semestral",
+                descricao = "Acesso completo à academia por 6 meses com desconto especial",
+                valor = 699.90,
+                duracaoMeses = 6,
+                ativo = true
+            ),
+            Plano(
+                nome = "Anual",
+                descricao = "Acesso completo à academia por 12 meses com melhor custo-benefício",
+                valor = 1199.90,
+                duracaoMeses = 12,
+                ativo = true
+            )
+        )
+
+        base.forEach { planoUseCase.create(it) }
     }
 }
