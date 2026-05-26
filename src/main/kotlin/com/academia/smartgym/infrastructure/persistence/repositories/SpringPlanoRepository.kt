@@ -5,4 +5,4 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface SpringPlanoRepository : JpaRepository<PlanoEntity, Long>
+interface SpringPlanoRepository : JpaRepository<PlanoEntity, Int>

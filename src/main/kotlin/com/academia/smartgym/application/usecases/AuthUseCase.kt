@@ -66,28 +66,12 @@ class AuthUseCase(
             senha = request.senha,
             role = UserRole.ALUNO,
             status = true,
+            plano = null,
             planoVencimento = null,
-            focoTreino = null,
-            treinoAtual = null,
-            plano = "Basic",
-            planoValor = 0.0,
             emailVerificado = false
         )
-
-        val usuarioCriado = usuarioUseCase.criar(novoUsuario)
-
-        val token = UUID.randomUUID().toString()
-        verificationTokenRepository.salvar(
-            VerificationToken(
-                token = token,
-                usuarioId = usuarioCriado.id!!,
-                expiracao = LocalDateTime.now().plusHours(24)
-            )
-        )
-
-        emailService.enviarVerificacaoEmail(usuarioCriado.nome, usuarioCriado.email, token)
-
-        return usuarioCriado
+        
+        return usuarioUseCase.criar(novoUsuario)
     }
 
     fun verificarEmail(token: String): String {

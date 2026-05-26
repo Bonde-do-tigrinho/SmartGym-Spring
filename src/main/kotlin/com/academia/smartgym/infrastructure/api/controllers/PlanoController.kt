@@ -23,7 +23,7 @@ class PlanoController(private val planoUseCase: PlanoUseCase) {
     }
 
     @GetMapping("/{id}")
-    fun getPlanoById(@PathVariable id: Long): ResponseEntity<Plano> {
+    fun getPlanoById(@PathVariable id: Int): ResponseEntity<Plano> {
         val plano = planoUseCase.findById(id)
         return if (plano != null) {
             ResponseEntity.ok(plano)
@@ -33,7 +33,7 @@ class PlanoController(private val planoUseCase: PlanoUseCase) {
     }
 
     @PutMapping("/{id}")
-    fun updatePlano(@PathVariable id: Long, @Valid @RequestBody plano: Plano): ResponseEntity<Plano> {
+    fun updatePlano(@PathVariable id: Int, @Valid @RequestBody plano: Plano): ResponseEntity<Plano> {
         return try {
             val updatedPlano = planoUseCase.update(id, plano)
             ResponseEntity.ok(updatedPlano)
@@ -44,7 +44,7 @@ class PlanoController(private val planoUseCase: PlanoUseCase) {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deletePlano(@PathVariable id: Long) {
+    fun deletePlano(@PathVariable id: Int) {
         planoUseCase.delete(id)
     }
 }
