@@ -90,6 +90,13 @@ class SecurityConfig(
                     .requestMatchers(HttpMethod.PUT, "/api/maquinas/{id}").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.DELETE, "/api/maquinas/{id}").hasRole("ADMIN")
 
+                    //DispositivoIotController
+                    .requestMatchers(HttpMethod.GET, "/api/dispositivos-iot").hasAnyRole("ADMIN", "PROFESSOR")
+                    .requestMatchers(HttpMethod.GET, "/api/dispositivos-iot/{id}").hasAnyRole("ADMIN", "PROFESSOR")
+                    .requestMatchers(HttpMethod.POST, "/api/dispositivos-iot").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.PUT, "/api/dispositivos-iot/{id}").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.DELETE, "/api/dispositivos-iot/{id}").hasRole("ADMIN")
+
                     //PlanoController
                     .requestMatchers(HttpMethod.GET, "/api/planos").hasAnyRole("ADMIN", "PROFESSOR", "ALUNO")
                     .requestMatchers(HttpMethod.GET, "/api/planos/{id}").hasAnyRole("ADMIN", "PROFESSOR", "ALUNO")

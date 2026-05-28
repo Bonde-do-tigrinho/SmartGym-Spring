@@ -8,4 +8,5 @@ interface MaquinaIotRepository {
     fun save(maquinaIot: MaquinaIot): MaquinaIot
     fun deleteById(id: String)
     fun findByName(nome: String): List<MaquinaIot>
+    fun findByDeviceId(deviceId: String): MaquinaIot?
 }

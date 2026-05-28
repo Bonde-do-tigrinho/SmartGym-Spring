@@ -12,6 +12,8 @@ import java.time.LocalDate
 class DevelopmentDataSeeder(
     private val usuarioUseCase: UsuarioUseCase,
     private val maquinaUseCase: MaquinaUseCase,
+    private val dispositivoIotUseCase: DispositivoIotUseCase,
+    private val maquinaIotUseCase: MaquinaIotUseCase,
     private val exercicioUseCase: ExercicioUseCase,
     private val avaliacaoUseCase: AvaliacaoUseCase,
     private val unidadeUseCase: UnidadeUseCase,
@@ -20,7 +22,9 @@ class DevelopmentDataSeeder(
 
     override fun run(vararg args: String) {
         val alunos = seedAlunos()
+        val dispositivos = seedDispositivosIot()
         val maquinas = seedMaquinas()
+        seedMaquinasIot(dispositivos)
         seedAdmin()
         seedExercicios(maquinas)
         seedAvaliacoes(alunos)
@@ -85,6 +89,37 @@ class DevelopmentDataSeeder(
 
         base.forEach { maquinaUseCase.salvar(it) }
         return maquinaUseCase.listarTodas()
+    }
+
+    private fun seedDispositivosIot(): List<DispositivoIot> {
+        val existentes = dispositivoIotUseCase.findAll()
+        if (existentes.isNotEmpty()) return existentes
+
+        val base = listOf(
+            DispositivoIot(id = "tcrt5000", nome = "Sensor TCRT5000 - Leg Press", descricao = "Sensor da esteira/leg press principal", ativo = true),
+            DispositivoIot(id = "esp32_supino_01", nome = "ESP32 Supino 01", descricao = "Sensor do supino reto", ativo = true),
+            DispositivoIot(id = "esp32_puxador_01", nome = "ESP32 Puxador 01", descricao = "Sensor do puxador frontal", ativo = true)
+        )
+
+        base.forEach { dispositivoIotUseCase.create(it) }
+        return dispositivoIotUseCase.findAll()
+    }
+
+    private fun seedMaquinasIot(dispositivos: List<DispositivoIot>) {
+        if (maquinaIotUseCase.findAll(null).isNotEmpty()) return
+
+        val deviceLegPress = dispositivos.firstOrNull { it.id == "tcrt5000" }?.id ?: return
+        val deviceSupino = dispositivos.firstOrNull { it.id == "esp32_supino_01" }?.id ?: deviceLegPress
+        val devicePuxador = dispositivos.firstOrNull { it.id == "esp32_puxador_01" }?.id ?: deviceLegPress
+
+        val base = listOf(
+            MaquinaIot(id = null, nome = "Esteira IoT 1", localizacao = "Sala IoT A", status = StatusMaquinaIot.LIVRE, deviceId = deviceLegPress),
+            MaquinaIot(id = null, nome = "Esteira IoT 2", localizacao = "Sala IoT B", status = StatusMaquinaIot.LIVRE, deviceId = deviceSupino),
+            MaquinaIot(id = null, nome = "Esteira IoT 3", localizacao = "Sala IoT C", status = StatusMaquinaIot.MANUTENCAO, deviceId = devicePuxador)
+        )
+
+        base.forEach { maquinaIotUseCase.create(it) }
+        println(" Dispositivos IoT e máquinas IoT fixas inseridos no banco")
     }
 
     private fun seedExercicios(maquinas: List<Maquina>) {
