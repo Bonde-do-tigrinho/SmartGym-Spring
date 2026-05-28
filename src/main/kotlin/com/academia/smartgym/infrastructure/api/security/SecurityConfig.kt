@@ -103,6 +103,16 @@ class SecurityConfig(
                     .requestMatchers(HttpMethod.PUT, "/api/unidades/{id}").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.DELETE, "/api/unidades/{id}").hasRole("ADMIN")
 
+                    // AulaColetivaController
+                    .requestMatchers(HttpMethod.POST, "/api/aulas-coletivas").hasRole("PROFESSOR")
+                    .requestMatchers(HttpMethod.PUT, "/api/aulas-coletivas/{id}").hasRole("PROFESSOR")
+                    .requestMatchers(HttpMethod.DELETE, "/api/aulas-coletivas/{id}").hasRole("PROFESSOR")
+                    .requestMatchers(HttpMethod.GET, "/api/aulas-coletivas/semana").hasAnyRole("PROFESSOR", "ALUNO")
+
+                    // AgendamentoController
+                    .requestMatchers(HttpMethod.POST, "/api/agendamentos").hasRole("ALUNO")
+                    .requestMatchers(HttpMethod.DELETE, "/api/agendamentos/{id}").hasRole("ALUNO")
+
                     .requestMatchers(HttpMethod.GET, "/api/usuarios/me").authenticated()
 
                     .anyRequest().authenticated()
