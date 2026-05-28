@@ -10,14 +10,19 @@ import org.springframework.stereotype.Repository
 @Repository
 class UsuarioRepositoryImpl(
     private val springRepo: SpringUsuarioRepository,
-    private val springPlanoRepo: SpringPlanoRepository       // novo
+    private val springPlanoRepo: SpringPlanoRepository
 ) : UsuarioRepository {
 
     override fun findAll(): List<Usuario> =
         springRepo.findAll().map { UsuarioMapper.toDomain(it) }
 
-    override fun findById(id: Int): Usuario? =
-        springRepo.findById(id).map { UsuarioMapper.toDomain(it) }.orElse(null)
+    override fun findById(id: Int?): Usuario? {
+        return id?.let { nonNullId ->
+            springRepo.findById(nonNullId)
+                .map { UsuarioMapper.toDomain(it) }
+                .orElse(null)
+        }
+    }
 
     override fun findByEmail(email: String): Usuario? =
         springRepo.findByEmail(email)?.let { UsuarioMapper.toDomain(it) }
@@ -69,4 +74,3 @@ class UsuarioRepositoryImpl(
         return UsuarioMapper.toDomain(springRepo.save(atualizado))
     }
 }
-

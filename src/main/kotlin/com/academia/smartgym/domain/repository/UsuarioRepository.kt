@@ -6,7 +6,7 @@ import com.academia.smartgym.domain.model.Usuario
 interface UsuarioRepository {
     fun findAll(): List<Usuario>
 
-    fun findById(id: Int): Usuario?
+    fun findById(id: Int?): Usuario?
 
     fun save(usuario: Usuario): Usuario
 

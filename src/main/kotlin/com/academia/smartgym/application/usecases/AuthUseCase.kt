@@ -13,7 +13,6 @@ import com.academia.smartgym.domain.repository.VerificationTokenRepository
 import com.academia.smartgym.infrastructure.api.security.JwtService
 import com.academia.smartgym.infrastructure.api.security.services.EmailService
 import org.springframework.security.authentication.AuthenticationManager
-import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -33,6 +32,11 @@ class AuthUseCase(
     private val passwordEncoder: PasswordEncoder
 ) {
     fun login(request: AuthRequest): AuthResponse {
+
+        authenticationManager.authenticate(
+            UsernamePasswordAuthenticationToken(request.email, request.senha)
+        )
+
         val usuario = usuarioRepository.findByEmail(request.email)
             ?: throw UsernameNotFoundException("Usuário não encontrado")
 
@@ -40,9 +44,12 @@ class AuthUseCase(
             throw RuntimeException("Verifique seu email antes de fazer login")
         }
 
-        authenticationManager.authenticate(
-            UsernamePasswordAuthenticationToken(request.email, request.senha)
-        )
+        val isPerfilCompleto = when (usuario.role){
+            UserRole.ALUNO -> usuario.plano != null
+            UserRole.PROFESSOR, UserRole.ADMIN -> true
+            null -> throw IllegalStateException("Usuário possui perfil/role inválido no sistema.")
+        }
+
 
         val token = jwtService.generateToken(
             username = usuario.email,
@@ -53,6 +60,7 @@ class AuthUseCase(
             token = token,
             role = usuario.role?.name ?: "ALUNO",
             nome = usuario.nome,
+            perfilCompleto = isPerfilCompleto
             )
     }
 

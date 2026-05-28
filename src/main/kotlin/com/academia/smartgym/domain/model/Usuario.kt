@@ -3,7 +3,9 @@ package com.academia.smartgym.domain.model
 import jakarta.validation.constraints.*
 
 enum class UserRole {
-    ALUNO, PROFESSOR, ADMIN
+    ALUNO,
+    PROFESSOR,
+    ADMIN
 }
 
 data class Usuario(

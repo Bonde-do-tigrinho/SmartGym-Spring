@@ -54,7 +54,7 @@ class SecurityConfig(
                     .requestMatchers(HttpMethod.DELETE, "/api/alunos/{id}").hasRole("ADMIN")
 
                     //ProfessorController
-                    .requestMatchers(HttpMethod.GET, "/api/professores").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/api/professores").hasAnyRole("ADMIN", "ALUNO")
                     .requestMatchers(HttpMethod.GET, "/api/professores/{id}").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.POST, "/api/professores").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.PUT, "/api/professores/{id}").hasRole("ADMIN")
