@@ -2,7 +2,7 @@
 
 Este diretorio centraliza os artefatos de teste do caso de uso `FichaTreinoUseCase`.
 
-## Links para entrega
+## Links
 
 - Codigo dos testes (JUnit):
   - `src/test/kotlin/com/academia/smartgym/application/usecases/FichaTreinoUseCaseTest.kt`
@@ -14,7 +14,6 @@ Este diretorio centraliza os artefatos de teste do caso de uso `FichaTreinoUseCa
 ## Comandos usados na execucao
 
 ```powershell
-Set-Location "C:\Users\kendi\Documents\Github\SmartGym-Spring"
 .\mvnw.cmd -Dtest=FichaTreinoUseCaseTest clean verify
 ```
 
