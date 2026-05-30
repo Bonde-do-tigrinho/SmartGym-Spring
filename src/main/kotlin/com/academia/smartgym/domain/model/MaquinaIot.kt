@@ -7,4 +7,5 @@ data class MaquinaIot(
     val nome: String,
     val localizacao: String,
     val status: StatusMaquinaIot,
+    val deviceId: String? = null,
 ) : Serializable
