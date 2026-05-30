@@ -93,7 +93,7 @@ Os testes cobrem, entre outros, os seguintes cenarios:
 - validacao de exercicios referenciados existentes
 - exclusao por id
 
-## 6) Links para a entrega
+## 6) Links
 
 - Link do codigo dos testes implementados:
   - https://github.com/Bonde-do-tigrinho/SmartGym-Spring/blob/Kendas-main-aux/src/test/kotlin/com/academia/smartgym/application/usecases/FichaTreinoUseCaseTest.kt
