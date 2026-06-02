@@ -15,7 +15,7 @@ class ExercicioRepositoryImpl(
     override fun findAll(): List<Exercicio> =
         springExercicioRepository.findAll().map { it.toDomain() }
 
-    override fun findById(id: Long): Exercicio? =
+    override fun findById(id: Int): Exercicio? =
         springExercicioRepository.findById(id).map { it.toDomain() }.orElse(null)
 
     override fun save(exercicio: Exercicio): Exercicio {
@@ -24,10 +24,10 @@ class ExercicioRepositoryImpl(
         return saved.toDomain()
     }
 
-    override fun deleteById(id: Long) =
+    override fun deleteById(id: Int) =
         springExercicioRepository.deleteById(id)
 
-    override fun findByMaquinaId(maquinaId: Long): List<Exercicio> =
+    override fun findByMaquinaId(maquinaId: Int): List<Exercicio> =
         springExercicioRepository.findByMaquinaId(maquinaId).map { it.toDomain() }
 
     override fun findByNomeContainingIgnoreCase(nome: String): List<Exercicio> =

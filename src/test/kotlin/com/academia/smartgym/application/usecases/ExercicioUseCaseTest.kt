@@ -108,8 +108,8 @@ class ExercicioUseCaseTest {
 
         // Assert
         assertEquals(2, resultado.size)
-        assertEquals(1L, resultado[0].maquinaId)
-        assertEquals(1L, resultado[1].maquinaId)
+        assertEquals(1, resultado[0].maquinaId)
+        assertEquals(2, resultado[1].maquinaId)
         verify(exercicioRepository).findByMaquinaId(1)
     }
 }

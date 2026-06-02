@@ -5,8 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface SpringExercicioRepository : JpaRepository<ExercicioEntity, Long> {
-    fun findByMaquinaId(maquinaId: Long): List<ExercicioEntity>
+interface SpringExercicioRepository : JpaRepository<ExercicioEntity, Int> {
+    fun findByMaquinaId(maquinaId: Int): List<ExercicioEntity>
 
     fun findByNomeContainingIgnoreCase(nome: String): List<ExercicioEntity>
 

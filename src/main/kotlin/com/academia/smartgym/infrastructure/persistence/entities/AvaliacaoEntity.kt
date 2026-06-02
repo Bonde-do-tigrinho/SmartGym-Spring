@@ -20,6 +20,10 @@ class AvaliacaoEntity(
     @Column(nullable = false)
     val nomeAluno: String,
 
+    @Column(name = "professor_id", nullable = false)
+    val professorId: Int?,
+
+
     @Column(nullable = false)
     val dataAvaliacao: LocalDate,
 

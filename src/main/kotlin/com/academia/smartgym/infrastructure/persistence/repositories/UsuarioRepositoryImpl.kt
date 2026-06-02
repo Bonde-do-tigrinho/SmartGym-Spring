@@ -73,4 +73,9 @@ class UsuarioRepositoryImpl(
         val atualizado = aluno.copy(professor = professor)
         return UsuarioMapper.toDomain(springRepo.save(atualizado))
     }
-}
+
+    override fun findByProfessorId(professorId: Int?): List<Usuario> {
+        val entities = springRepo.findByProfessorId(professorId)
+
+        return entities.map{ UsuarioMapper.toDomain(it)} }
+    }

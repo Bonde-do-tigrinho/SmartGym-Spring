@@ -29,7 +29,7 @@ class UsuarioUseCase(
 
     fun listarPorRole(role: UserRole) = repository.findByRole(role)
 
-    fun buscar(id: Int) =
+    fun buscar(id: Int?) =
         repository.findById(id) ?: throw RuntimeException("Usuario não encontrado")
 
     fun buscarPorEmail(email: String): Usuario =
@@ -120,6 +120,10 @@ class UsuarioUseCase(
     }
 
     fun deletar(id: Int) = repository.deleteById(id)
+
+    fun listarAlunosPorProfessor(professorId: Int?): List<Usuario>{
+        return repository.findByProfessorId(professorId)
+    }
 
     private fun gerarSenhaAleatoria(): String {
         val chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%"

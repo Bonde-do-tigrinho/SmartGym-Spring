@@ -8,4 +8,6 @@ interface SpringUsuarioRepository : JpaRepository<UsuarioEntity, Int>{
     fun findByEmail(email: String): UsuarioEntity?
     fun findByCpf(cpf: String): UsuarioEntity?
     fun findByRole(role: UserRole): List<UsuarioEntity>
+
+    fun findByProfessorId(professorId: Int?): List<UsuarioEntity>
 }

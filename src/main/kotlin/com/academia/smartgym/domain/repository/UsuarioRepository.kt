@@ -18,6 +18,8 @@ interface UsuarioRepository {
     fun findByCpf(cpf: String): Usuario?
     fun findByRole(role: UserRole): List<Usuario>
 
+    fun findByProfessorId(professorId: Int?): List<Usuario>
+
     fun vincularPlano(alunoId: Int, planoId: Int, vencimento: String): Usuario?
     fun vincularProfessor(alunoId: Int, professorId: Int): Usuario?
 }

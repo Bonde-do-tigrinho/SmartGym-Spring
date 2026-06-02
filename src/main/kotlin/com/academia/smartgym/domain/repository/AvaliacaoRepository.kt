@@ -9,5 +9,6 @@ interface AvaliacaoRepository {
     fun deleteById(id: Long)
     fun findByAlunoId(alunoId: Int): List<Avaliacao>
     fun findByNomeAlunoContainingIgnoreCase(nome: String): List<Avaliacao>
+    fun findByProfessorId(professorId: Int?): List<Avaliacao>
 }
 

@@ -13,23 +13,12 @@ class DispositivoIotUseCase(
     fun findById(id: String): DispositivoIot? = dispositivoIotRepository.findById(id)
 
     fun create(dispositivoIot: DispositivoIot): DispositivoIot {
-        if (dispositivoIot.id.isBlank()) {
-            throw IllegalArgumentException("O id do dispositivo e obrigatorio")
-        }
-        if (dispositivoIotRepository.findById(dispositivoIot.id) != null) {
-            throw IllegalArgumentException("Dispositivo IoT ja cadastrado")
-        }
         return dispositivoIotRepository.save(dispositivoIot)
     }
 
     fun update(id: String, dispositivoIot: DispositivoIot): DispositivoIot {
-        val existing = dispositivoIotRepository.findById(id) ?: throw Exception("Dispositivo IoT não encontrado")
-        val updated = existing.copy(
-            nome = dispositivoIot.nome,
-            descricao = dispositivoIot.descricao,
-            ativo = dispositivoIot.ativo
-        )
-        return dispositivoIotRepository.save(updated)
+        dispositivoIotRepository.findById(id) ?: throw Exception("Dispositivo IoT não encontrado")
+        return dispositivoIotRepository.save(dispositivoIot)
     }
 
     fun delete(id: String) {
@@ -37,4 +26,3 @@ class DispositivoIotUseCase(
         dispositivoIotRepository.deleteById(id)
     }
 }
-
