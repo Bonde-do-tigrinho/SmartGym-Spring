@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository
 @Repository
 interface SpringMaquinaIotRepository : JpaRepository<MaquinaIotEntity, String> {
     fun findByNomeContainingIgnoreCase(nome: String): List<MaquinaIotEntity>
+    fun findByDispositivoIot_Id(deviceId: String): MaquinaIotEntity?
 }

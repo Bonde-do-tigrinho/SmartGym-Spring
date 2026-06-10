@@ -46,15 +46,17 @@ class SecurityConfig(
                     .requestMatchers("/api/auth/**").permitAll()
 
                     //AlunoController
-                    .requestMatchers(HttpMethod.GET, "/api/alunos").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/api/alunos").hasAnyRole("ADMIN", "PROFESSOR")
                     .requestMatchers(HttpMethod.POST, "/api/alunos").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.GET, "/api/alunos/{id}").hasAnyRole("ADMIN", "ALUNO")
                     .requestMatchers(HttpMethod.POST, "/api/alunos").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.PUT, "/api/alunos/{id}").hasAnyRole("ADMIN", "ALUNO")
                     .requestMatchers(HttpMethod.DELETE, "/api/alunos/{id}").hasRole("ADMIN")
 
+
                     //ProfessorController
-                    .requestMatchers(HttpMethod.GET, "/api/professores").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/api/professores/meus-alunos").hasAnyRole("PROFESSOR", "ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/api/professores").hasAnyRole("ADMIN", "ALUNO")
                     .requestMatchers(HttpMethod.GET, "/api/professores/{id}").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.POST, "/api/professores").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.PUT, "/api/professores/{id}").hasRole("ADMIN")
@@ -89,6 +91,13 @@ class SecurityConfig(
                     .requestMatchers(HttpMethod.POST, "/api/maquinas").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.PUT, "/api/maquinas/{id}").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.DELETE, "/api/maquinas/{id}").hasRole("ADMIN")
+
+                    //DispositivoIotController
+                    .requestMatchers(HttpMethod.GET, "/api/dispositivos-iot").hasAnyRole("ADMIN", "PROFESSOR")
+                    .requestMatchers(HttpMethod.GET, "/api/dispositivos-iot/{id}").hasAnyRole("ADMIN", "PROFESSOR")
+                    .requestMatchers(HttpMethod.POST, "/api/dispositivos-iot").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.PUT, "/api/dispositivos-iot/{id}").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.DELETE, "/api/dispositivos-iot/{id}").hasRole("ADMIN")
 
                     //PlanoController
                     .requestMatchers(HttpMethod.GET, "/api/planos").hasAnyRole("ADMIN", "PROFESSOR", "ALUNO")

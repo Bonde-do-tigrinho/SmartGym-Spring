@@ -18,6 +18,9 @@ data class Avaliacao(
     @field:Size(min = 3, message = "O nome do aluno deve ter mais de 3 letras")
     val nomeAluno: String,
 
+    @field:NotBlank(message = "E preciso de um professor para fazer avaliacao!")
+    val professorId: Int?,
+
     @field:NotNull(message = "Data da avaliação é obrigatória!")
     val dataAvaliacao: LocalDate,
 

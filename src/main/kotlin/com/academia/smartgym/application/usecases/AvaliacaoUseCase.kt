@@ -20,5 +20,7 @@ class AvaliacaoUseCase(private val repository: AvaliacaoRepository) {
 
     fun buscarPorNomeAluno(nome: String) =
         repository.findByNomeAlunoContainingIgnoreCase(nome)
+
+    fun buscarPorProfessor(id: Int?) = repository.findByProfessorId(id)
 }
 

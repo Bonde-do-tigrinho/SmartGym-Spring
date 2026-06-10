@@ -10,18 +10,15 @@ spring:
   profiles:
     active: local
 
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
+  security:
+    user:
+      name: admin
 
   datasource:
     driver-class-name: org.postgresql.Driver
+    url: ""
+    username: ""
+    password: ""
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
@@ -31,6 +28,19 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ""
+    password: ""
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
 
   web:
     error:
@@ -42,3 +52,11 @@ spring:
 app:
   seed:
     enabled: true
+  mqtt:
+    url: tcp://broker.hivemq.com:1883
+    client-id: smartgym-backend
+    username: ""
+    password: ""
+    topic:
+      telemetry: smartgym/device/+/telemetry
+      command-prefix: smartgym/device

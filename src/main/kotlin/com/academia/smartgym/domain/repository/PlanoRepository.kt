@@ -4,7 +4,7 @@ import com.academia.smartgym.domain.model.Plano
 
 interface PlanoRepository {
     fun findAll(): List<Plano>
-    fun findById(id: Long): Plano?
+    fun findById(id: Int): Plano?
     fun save(plano: Plano): Plano
-    fun deleteById(id: Long)
+    fun deleteById(id: Int)
 }

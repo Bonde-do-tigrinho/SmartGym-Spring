@@ -8,14 +8,14 @@ import org.springframework.stereotype.Service
 class ExercicioUseCase(private val repository: ExercicioRepository) {
     fun listarTodos() = repository.findAll()
 
-    fun buscarPorId(id: Long) =
+    fun buscarPorId(id: Int) =
         repository.findById(id) ?: throw Exception("Exercício não encontrado")
 
     fun salvar(exercicio: Exercicio) = repository.save(exercicio)
 
-    fun excluir(id: Long) = repository.deleteById(id)
+    fun excluir(id: Int) = repository.deleteById(id)
 
-    fun listarPorMaquina(maquinaId: Long) = repository.findByMaquinaId(maquinaId)
+    fun listarPorMaquina(maquinaId: Int) = repository.findByMaquinaId(maquinaId)
 
     fun buscarPorNome(nome: String) =
         repository.findByNomeContainingIgnoreCase(nome)

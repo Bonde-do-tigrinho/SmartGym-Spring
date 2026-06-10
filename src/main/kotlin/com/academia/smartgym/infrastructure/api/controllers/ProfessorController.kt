@@ -1,9 +1,14 @@
 package com.academia.smartgym.infrastructure.api.controllers
 
+import com.academia.smartgym.application.dto.AlunoResumido
 import com.academia.smartgym.application.usecases.UsuarioUseCase
 import com.academia.smartgym.domain.model.Usuario
 import com.academia.smartgym.domain.model.UserRole
 import jakarta.validation.Valid
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
+import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -29,5 +34,15 @@ class ProfessorController(
     @PutMapping("/{id}")
     fun atualizar(@Valid @PathVariable id: Int, @RequestBody usuario: Usuario): Usuario {
         return useCase.atualizar(id, usuario.copy(role = UserRole.PROFESSOR))
+    }
+
+    @GetMapping("/meus-alunos")
+    fun listarMeusAlunos(@AuthenticationPrincipal userDetails: UserDetails): ResponseEntity<List<AlunoResumido>> {
+        val professor = useCase.buscarPorEmail(userDetails.username)
+            ?: return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()
+
+        val meusAlunos = useCase.listarAlunosPorProfessor(professor.id)
+
+        return ResponseEntity.ok(meusAlunos.map { AlunoResumido(it.id, it.nome) })
     }
 }
