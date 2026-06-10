@@ -133,7 +133,7 @@ class DevelopmentDataSeeder(
         if (avaliacaoUseCase.listarTodas().isNotEmpty()) return
         val base = usuarios.take(2).mapIndexedNotNull { index, aluno ->
             val alunoId = aluno.id ?: return@mapIndexedNotNull null
-            Avaliacao(alunoId = alunoId, nomeAluno = aluno.nome, dataAvaliacao = LocalDate.now().minusDays(index.toLong()), peso = if (index == 0) 78.5 else 62.0, percentualGordura = if (index == 0) 15.2 else 22.5, imc = if (index == 0) 25.6 else 22.8, professorId = 6, nota = if (index == 0) "Boa evolucao. Manter treino atual." else "Iniciar treino de forca.")
+            Avaliacao(alunoId = alunoId, nomeAluno = aluno.nome, dataAvaliacao = LocalDate.now().minusDays(index.toLong()), peso = if (index == 0) 78.5 else 62.0, percentualGordura = if (index == 0) 15.2 else 22.5, imc = if (index == 0) 25.6 else 22.8, professorId = 3, nota = if (index == 0) "Boa evolucao. Manter treino atual." else "Iniciar treino de forca.")
         }
         base.forEach { avaliacaoUseCase.salvar(it) }
     }
