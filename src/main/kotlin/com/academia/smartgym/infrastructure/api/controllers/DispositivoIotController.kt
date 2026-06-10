@@ -4,15 +4,7 @@ import com.academia.smartgym.application.usecases.DispositivoIotUseCase
 import com.academia.smartgym.domain.model.DispositivoIot
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.ResponseStatus
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/dispositivos-iot")
@@ -21,23 +13,35 @@ class DispositivoIotController(
 ) {
 
     @GetMapping
-    fun findAll(): List<DispositivoIot> = dispositivoIotUseCase.findAll()
+    fun findAll(): List<DispositivoIot> {
+        // Força o retorno estrito de uma lista de domínios DispositivoIot
+        return dispositivoIotUseCase.findAll()
+    }
 
     @GetMapping("/{id}")
     fun findById(@PathVariable id: String): ResponseEntity<DispositivoIot> {
         val dispositivo = dispositivoIotUseCase.findById(id)
-        return if (dispositivo != null) ResponseEntity.ok(dispositivo) else ResponseEntity.notFound().build()
+        return if (dispositivo != null) {
+            ResponseEntity.ok(dispositivo)
+        } else {
+            ResponseEntity.notFound().build()
+        }
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody dispositivoIot: DispositivoIot): DispositivoIot =
-        dispositivoIotUseCase.create(dispositivoIot)
+    fun create(@RequestBody dispositivoIot: DispositivoIot): DispositivoIot {
+        return dispositivoIotUseCase.create(dispositivoIot)
+    }
 
     @PutMapping("/{id}")
-    fun update(@PathVariable id: String, @RequestBody dispositivoIot: DispositivoIot): ResponseEntity<DispositivoIot> {
+    fun update(
+        @PathVariable id: String,
+        @RequestBody dispositivoIot: DispositivoIot
+    ): ResponseEntity<DispositivoIot> {
         return try {
-            ResponseEntity.ok(dispositivoIotUseCase.update(id, dispositivoIot))
+            val updated = dispositivoIotUseCase.update(id, dispositivoIot)
+            ResponseEntity.ok(updated)
         } catch (_: Exception) {
             ResponseEntity.notFound().build()
         }
@@ -49,5 +53,3 @@ class DispositivoIotController(
         dispositivoIotUseCase.delete(id)
     }
 }
-
-

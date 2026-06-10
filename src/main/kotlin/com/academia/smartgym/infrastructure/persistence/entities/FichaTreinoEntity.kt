@@ -8,21 +8,18 @@ import java.util.Date
 class FichaTreinoEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
+    val id: Int? = null,
 
     @Column(name = "aluno_id", nullable = false)
-    val alunoId: Int,
+    val alunoId: Int?,
 
-    @ElementCollection
-    @CollectionTable(
-        name = "ficha_treino_exercicios",
-        joinColumns = [JoinColumn(name = "ficha_treino_id")]
-    )
-    val exercicios: List<FichaTreinoExercicioEmbeddable> = emptyList(),
+    @Column(name = "professor_id")
+    val professorId: Int? = null,
 
     @Column(nullable = false)
-    val focoTreino: String,
+    val vigencia: Date,
 
-    @Column(nullable = false)
-    val vigencia: Date
+    @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "ficha_treino_id")
+    var rotinaDias: Set<TreinoDiaEntity> = mutableSetOf()
 )

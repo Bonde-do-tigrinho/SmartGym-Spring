@@ -7,7 +7,7 @@ import jakarta.persistence.*
 class ExercicioEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
+    val id: Int? = null,
 
     @Column(nullable = false)
     val nome: String,
@@ -22,6 +22,6 @@ class ExercicioEntity(
     val grupoMuscular: String?,
 
     @Column(name = "maquina_id")
-    val maquinaId: Long? = null // NULL se tipo for LIVRE
+    val maquinaId: Int? = null // NULL se tipo for LIVRE
 )
 

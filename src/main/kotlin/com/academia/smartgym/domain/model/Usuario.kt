@@ -1,8 +1,6 @@
 package com.academia.smartgym.domain.model
 
-import jakarta.validation.constraints.Email
-import jakarta.validation.constraints.NotBlank
-import jakarta.validation.constraints.Size
+import jakarta.validation.constraints.*
 
 enum class UserRole {
     ALUNO,
@@ -33,11 +31,21 @@ data class Usuario(
     @field:Size(min = 6, message = "Senha deve ter no mínimo 6 caracteres")
     val senha: String? = null,
 
-    val plano: String? = null,
-    val status: Boolean? = true,
-    val treinoAtual: String? = null,
-    val focoTreino: String? = null,
+    // ── Plano ──────────────────────────────────────
+    val plano: Plano? = null,
     val planoVencimento: String? = null,
-    val planoValor: Double? = null,
+
+    // ── Professor ──────────────────────────────────
+    val professorId: Int? = null,
+    val professorNome: String? = null,
+
+    // ── Dados Físicos ──────────────────────────────
+    val dataNascimento: String? = null,
+    val altura: Double? = null,
+    val peso: Double? = null,
+    val dataCadastro: String? = null,
+
+    // ── Status ─────────────────────────────────────
+    val status: Boolean = true,
     val emailVerificado: Boolean = false
 )

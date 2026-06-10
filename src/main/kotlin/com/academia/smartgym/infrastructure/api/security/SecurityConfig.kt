@@ -46,15 +46,17 @@ class SecurityConfig(
                     .requestMatchers("/api/auth/**").permitAll()
 
                     //AlunoController
-                    .requestMatchers(HttpMethod.GET, "/api/alunos").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/api/alunos").hasAnyRole("ADMIN", "PROFESSOR")
                     .requestMatchers(HttpMethod.POST, "/api/alunos").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.GET, "/api/alunos/{id}").hasAnyRole("ADMIN", "ALUNO")
                     .requestMatchers(HttpMethod.POST, "/api/alunos").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.PUT, "/api/alunos/{id}").hasAnyRole("ADMIN", "ALUNO")
                     .requestMatchers(HttpMethod.DELETE, "/api/alunos/{id}").hasRole("ADMIN")
 
+
                     //ProfessorController
-                    .requestMatchers(HttpMethod.GET, "/api/professores").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/api/professores/meus-alunos").hasAnyRole("PROFESSOR", "ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/api/professores").hasAnyRole("ADMIN", "ALUNO")
                     .requestMatchers(HttpMethod.GET, "/api/professores/{id}").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.POST, "/api/professores").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.PUT, "/api/professores/{id}").hasRole("ADMIN")

@@ -33,6 +33,9 @@ class AvaliacaoRepositoryImpl(
     override fun findByNomeAlunoContainingIgnoreCase(nome: String): List<Avaliacao> =
         springAvaliacaoRepository.findByNomeAlunoContainingIgnoreCase(nome).map { it.toDomain() }
 
+    override fun findByProfessorId(professorId: Int?): List<Avaliacao> =
+        springAvaliacaoRepository.findByProfessorId(professorId).map { it.toDomain() }
+
     private fun AvaliacaoEntity.toDomain() = mapper.run { this@toDomain.toDomain() }
     private fun Avaliacao.toEntity() = mapper.run { this@toEntity.toEntity() }
 }

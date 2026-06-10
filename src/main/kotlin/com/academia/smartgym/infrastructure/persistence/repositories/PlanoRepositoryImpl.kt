@@ -12,9 +12,9 @@ class PlanoRepositoryImpl(
 ) : PlanoRepository {
     override fun findAll(): List<Plano> = springPlanoRepository.findAll().map { it.toDomain() }
 
-    override fun findById(id: Long): Plano? = springPlanoRepository.findById(id).map { it.toDomain() }.orElse(null)
+    override fun findById(id: Int): Plano? = springPlanoRepository.findById(id).map { it.toDomain() }.orElse(null)
 
     override fun save(plano: Plano): Plano = springPlanoRepository.save(plano.toEntity()).toDomain()
 
-    override fun deleteById(id: Long) = springPlanoRepository.deleteById(id)
+    override fun deleteById(id: Int) = springPlanoRepository.deleteById(id)
 }

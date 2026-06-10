@@ -17,19 +17,19 @@ class ExercicioController(private val useCase: ExercicioUseCase) {
             useCase.buscarPorNome(nome)
 
     @GetMapping("/{id}")
-    fun getById(@PathVariable id: Long) = useCase.buscarPorId(id)
+    fun getById(@PathVariable id: Int) = useCase.buscarPorId(id)
 
     @PostMapping
     fun create(@Valid @RequestBody exercicio: Exercicio) = useCase.salvar(exercicio)
 
     @PutMapping("/{id}")
-    fun update(@Valid @PathVariable id: Long, @RequestBody exercicio: Exercicio) =
+    fun update(@Valid @PathVariable id: Int, @RequestBody exercicio: Exercicio) =
         useCase.salvar(exercicio.copy(id = id))
 
     @DeleteMapping("/{id}")
-    fun delete(@Valid @PathVariable id: Long) = useCase.excluir(id)
+    fun delete(@Valid @PathVariable id: Int) = useCase.excluir(id)
 
     @GetMapping("/maquina/{maquinaId}")
-    fun getByMaquina(@Valid @PathVariable maquinaId: Long) = useCase.listarPorMaquina(maquinaId)
+    fun getByMaquina(@Valid @PathVariable maquinaId: Int) = useCase.listarPorMaquina(maquinaId)
 }
 

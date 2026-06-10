@@ -9,11 +9,11 @@ class PlanoUseCase(private val planoRepository: PlanoRepository) {
 
     fun findAll(): List<Plano> = planoRepository.findAll()
 
-    fun findById(id: Long): Plano? = planoRepository.findById(id)
+    fun findById(id: Int): Plano? = planoRepository.findById(id)
 
     fun create(plano: Plano): Plano = planoRepository.save(plano)
 
-    fun update(id: Long, planoAtualizado: Plano): Plano {
+    fun update(id: Int, planoAtualizado: Plano): Plano {
         val planoExistente = planoRepository.findById(id) ?: throw RuntimeException("Plano não encontrado")
 
         val updatedPlano = planoExistente.copy(
@@ -27,7 +27,7 @@ class PlanoUseCase(private val planoRepository: PlanoRepository) {
         return planoRepository.save(updatedPlano)
     }
 
-    fun delete(id: Long) {
+    fun delete(id: Int) {
         planoRepository.findById(id) ?: throw RuntimeException("Plano não encontrado")
         planoRepository.deleteById(id)
     }
