@@ -17,5 +17,8 @@ class AgendamentoEntity(
     var aulaColetivaId: Long,
 
     @Column(name = "data_agendamento", nullable = false)
-    var dataAgendamento: LocalDateTime = LocalDateTime.now()
+    var dataAgendamento: LocalDateTime = LocalDateTime.now(),
+
+    @Column(nullable = false)
+    val confirmado: Boolean = true
 )

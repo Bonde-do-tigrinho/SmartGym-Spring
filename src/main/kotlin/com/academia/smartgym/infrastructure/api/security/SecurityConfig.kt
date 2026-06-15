@@ -44,6 +44,7 @@ class SecurityConfig(
             .authorizeHttpRequests {
                 it
                     .requestMatchers("/api/auth/**").permitAll()
+                    .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
 
                     //AlunoController
                     .requestMatchers(HttpMethod.GET, "/api/alunos").hasAnyRole("ADMIN", "PROFESSOR")

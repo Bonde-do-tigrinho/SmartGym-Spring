@@ -17,21 +17,21 @@ class NotificacaoRepositoryImpl(
     private val springRepository: SpringNotificacaoRepository
 ) : NotificacaoRepository {
 
-    override fun salvar(notificacao: Notificacao): Notificacao {
+    override fun save(notificacao: Notificacao): Notificacao {
         val entity = toEntity(notificacao)
         val salva = springRepository.save(entity)
         return toDomain(salva)
     }
 
-    override fun listarTodas(): List<Notificacao> {
+    override fun findAll(): List<Notificacao> {
         return springRepository.findAll().map { toDomain(it) }
     }
 
-    override fun buscarPorId(id: Int): Notificacao? {
+    override fun findById(id: Int): Notificacao? {
         return springRepository.findById(id).orElse(null)?.let { toDomain(it) }
     }
 
-    override fun deletar(id: Int) {
+    override fun deleteById(id: Int) {
         springRepository.deleteById(id)
     }
 

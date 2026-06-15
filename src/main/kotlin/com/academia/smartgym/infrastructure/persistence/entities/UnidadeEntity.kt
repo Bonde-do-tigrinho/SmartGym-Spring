@@ -16,5 +16,8 @@ data class UnidadeEntity(
     val endereco: String,
 
     @Column(nullable = false)
-    val cidade: String
+    val cidade: String,
+
+    @Column(nullable = false)
+    val ativa: Boolean = true
 )

@@ -15,13 +15,17 @@ class AvaliacaoEntity(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id", referencedColumnName = "id", insertable = false, updatable = false)
-    val usuario: UsuarioEntity? = null,
+    val aluno: UsuarioEntity? = null,
 
     @Column(nullable = false)
     val nomeAluno: String,
 
     @Column(name = "professor_id", nullable = false)
     val professorId: Int?,
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "professor_id", referencedColumnName = "id", insertable = false, updatable = false)
+    val professor: UsuarioEntity? = null,
 
 
     @Column(nullable = false)
@@ -39,5 +43,3 @@ class AvaliacaoEntity(
     @Column(nullable = false, length = 500)
     val nota: String
 )
-
-

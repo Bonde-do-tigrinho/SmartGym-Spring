@@ -9,26 +9,26 @@ class NotificacaoUseCase(
     private val notificacaoRepository: NotificacaoRepository
 ) {
     fun criar(notificacao: Notificacao): Notificacao {
-        return notificacaoRepository.salvar(notificacao)
+        return notificacaoRepository.save(notificacao)
     }
 
     fun atualizar(id: Int, notificacaoAtualizada: Notificacao): Notificacao {
         val existente = buscarPorId(id)
         val novaNotificacao = notificacaoAtualizada.copy(id = existente.id)
-        return notificacaoRepository.salvar(novaNotificacao)
+        return notificacaoRepository.save(novaNotificacao)
     }
 
     fun listarTodas(): List<Notificacao> {
-        return notificacaoRepository.listarTodas().sortedByDescending { it.dataPostagem }
+        return notificacaoRepository.findAll().sortedByDescending { it.dataPostagem }
     }
 
     fun buscarPorId(id: Int): Notificacao {
-        return notificacaoRepository.buscarPorId(id)
+        return notificacaoRepository.findById(id)
             ?: throw IllegalArgumentException("Notificação com ID $id não encontrada.")
     }
 
     fun deletar(id: Int) {
         val existente = buscarPorId(id)
-        notificacaoRepository.deletar(existente.id!!)
+        notificacaoRepository.deleteById(existente.id!!)
     }
 }

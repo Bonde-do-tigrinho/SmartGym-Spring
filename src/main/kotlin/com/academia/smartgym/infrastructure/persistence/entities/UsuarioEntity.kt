@@ -54,6 +54,6 @@ data class UsuarioEntity(
     val emailVerificado: Boolean = false,
 
     // ── Relacionamentos ────────────────────────────
-    @OneToMany(mappedBy = "usuario", cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "aluno", cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
     val avaliacoes: List<AvaliacaoEntity> = emptyList()
 )
