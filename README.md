@@ -6,7 +6,7 @@
 * **Joao Gabriel Silva Maximiniano** - RA: 1111392321025
 * **Leandro Rodrigues de Melo** - RA: 1111392321007
 * **Miguel Lemos Ramos** - RA: 1111392321023
-* * **Nicolas Kenzo Yanase** - RA: []
+* **Nicolas Kenzo Yanase** - RA: []
 * **Raul dos Santos Araujo** - RA: 1111392321008
 
 ## 🏋️‍♂️ Tema Escolhido
