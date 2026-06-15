@@ -3,7 +3,7 @@
 ## 👥 Integrantes do Grupo
 
 * **Gabriel Kendi Zanon Takeda** - RA: 1111392321014
-* **Joao Gabriel Silva Maximiniano** - RA: 1111392321025
+* **Joao Gabriel Silva Maximiano** - RA: 1111392321025
 * **Leandro Rodrigues de Melo** - RA: 1111392321007
 * **Miguel Lemos Ramos** - RA: 1111392321023
 * **Nicolas Kenzo Yanase** - RA: []
@@ -104,10 +104,16 @@ Aluno -	sera preciso fazer um cadastro para ter acesso de aluno
   - Implementacao da entidade de usuarios e todas as suas funcoes;
   
 
-  [Nome do Integrante 2]:
+  Leandro Rodrigues de Melo:
 
       
 
-  [Nome do Integrante 3]:
+  Nicolas Kenzo Yanase:
+
+  Gabriel Kendi Zanon Takeda:
+
+  Miguel Lemos Ramos:
+
+  Joao Gabriel Silva Maximiano:
 
         
