@@ -11,13 +11,15 @@ class AgendamentoMapper {
         id = id,
         alunoId = alunoId,
         aulaColetivaId = aulaColetivaId,
-        dataAgendamento = dataAgendamento
+        dataAgendamento = dataAgendamento,
+        confirmado = confirmado
     )
 
     fun Agendamento.toEntity() = AgendamentoEntity(
         id = id,
         alunoId = alunoId,
         aulaColetivaId = aulaColetivaId,
-        dataAgendamento = dataAgendamento ?: LocalDateTime.now()
+        dataAgendamento = dataAgendamento ?: LocalDateTime.now(),
+        confirmado = confirmado
     )
 }

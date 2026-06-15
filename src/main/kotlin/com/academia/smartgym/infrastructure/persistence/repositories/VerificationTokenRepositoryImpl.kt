@@ -3,13 +3,13 @@ package com.academia.smartgym.infrastructure.persistence
 import com.academia.smartgym.domain.model.VerificationToken
 import com.academia.smartgym.domain.repository.VerificationTokenRepository
 import com.academia.smartgym.infrastructure.persistence.entities.VerificationTokenEntity
-import com.academia.smartgym.infrastructure.persistence.repositories.VerificationTokenJpaRepository
+import com.academia.smartgym.infrastructure.persistence.repositories.SpringVerificationTokenRepository
 import org.springframework.stereotype.Repository
 import jakarta.transaction.Transactional
 
 @Repository
 class VerificationTokenRepositoryImpl(
-    private val jpa: VerificationTokenJpaRepository
+    private val jpa: SpringVerificationTokenRepository
 ) : VerificationTokenRepository {
 
     override fun salvar(token: VerificationToken): VerificationToken {

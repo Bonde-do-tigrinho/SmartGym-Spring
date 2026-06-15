@@ -17,11 +17,11 @@ data class Exercicio(
     @field:Size(min = 3, message = "Descrição deve ter no mínimo 3 caracteres")
     val descricao: String,
 
-    @field:NotNull(message = "Tipo é obrigatório!")  // ✅ enum usa @NotNull
+    @field:NotNull(message = "Tipo é obrigatório!")
     val tipo: TipoExercicio,
 
     @field:Size(min = 2, message = "Grupo muscular deve ter no mínimo 2 caracteres")
-    val grupoMuscular: String? = null,  // ✅ nullable não usa @NotBlank
+    val grupoMuscular: String? = null,
 
     val maquinaId: Int? = null
 )

@@ -3,13 +3,13 @@ package com.academia.smartgym.infrastructure.persistence
 import com.academia.smartgym.domain.model.PasswordResetToken
 import com.academia.smartgym.domain.repository.PasswordResetTokenRepository
 import com.academia.smartgym.infrastructure.persistence.entities.PasswordResetTokenEntity
-import com.academia.smartgym.infrastructure.persistence.repositories.PasswordResetTokenJpaRepository
+import com.academia.smartgym.infrastructure.persistence.repositories.SpringPasswordResetTokenRepository
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Repository
 
 @Repository
 class PasswordResetTokenRepositoryImpl(
-    private val jpa: PasswordResetTokenJpaRepository
+    private val jpa: SpringPasswordResetTokenRepository
 ) : PasswordResetTokenRepository {
 
     override fun salvar(token: PasswordResetToken): PasswordResetToken {

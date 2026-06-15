@@ -3,6 +3,7 @@ package com.academia.smartgym.infrastructure.api.controllers
 import com.academia.smartgym.application.usecases.AvaliacaoUseCase
 import com.academia.smartgym.application.usecases.UsuarioUseCase
 import com.academia.smartgym.domain.model.Avaliacao
+import com.academia.smartgym.domain.repository.AvaliacaoRepository
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.*
 class AvaliacaoController(
     private val useCase: AvaliacaoUseCase,
     private val usuarioUseCase: UsuarioUseCase,
-    private val avaliacaoRepository: AvaliacaoUseCase
+    private val avaliacaoRepository: AvaliacaoRepository
 ) {
 
     @GetMapping
@@ -30,7 +31,7 @@ class AvaliacaoController(
         val professor = usuarioUseCase.buscarPorEmail(userDetails.username)
             ?: return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()
 
-        val avaliacoesProfessor = avaliacaoRepository.buscarPorProfessor(professor.id)
+        val avaliacoesProfessor = avaliacaoRepository.findByProfessorId(professor.id)
 
         return ResponseEntity.ok(avaliacoesProfessor)
     }
@@ -39,7 +40,21 @@ class AvaliacaoController(
     fun getById(@PathVariable id: Long) = useCase.buscarPorId(id)
 
     @PostMapping
-    fun create(@Valid @RequestBody avaliacao: Avaliacao) = useCase.salvar(avaliacao)
+    fun create(
+        @RequestBody avaliacao: Avaliacao,
+        @AuthenticationPrincipal userDetails: UserDetails
+    ): ResponseEntity<Any> {
+        val professor = usuarioUseCase.buscarPorEmail(userDetails.username)
+            ?: return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()
+
+        val avaliacaoProntaParaSalvar = avaliacao.copy(
+            professorId = professor.id
+        )
+
+        val avaliacaoSalva = useCase.salvar(avaliacaoProntaParaSalvar)
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(avaliacaoSalva)
+    }
 
     @PutMapping("/{id}")
     fun atualizarAvaliacao(
@@ -50,7 +65,7 @@ class AvaliacaoController(
         val professor = usuarioUseCase.buscarPorEmail(userDetails.username)
             ?: return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()
 
-        val avaliacaoAntiga = avaliacaoRepository.buscarPorId(id)
+        val avaliacaoAntiga = avaliacaoRepository.findById(id)
             ?: return ResponseEntity.status(HttpStatus.NOT_FOUND).build()
 
         val avaliacaoParaSalvar = avaliacaoAlterada.copy(
@@ -58,7 +73,7 @@ class AvaliacaoController(
             professorId = professor.id
         )
 
-        val avaliacaoSalva = avaliacaoRepository.salvar(avaliacaoParaSalvar)
+        val avaliacaoSalva = avaliacaoRepository.save(avaliacaoParaSalvar)
         return ResponseEntity.ok(avaliacaoSalva)
     }
 
