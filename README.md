@@ -96,24 +96,38 @@ Professor	- lucas.mendes@smartgym.com	professor123
 Aluno -	sera preciso fazer um cadastro para ter acesso de aluno
 
 
-🤝 Divisão de Responsabilidades por Integrante
+## 🤝 Divisão de Responsabilidades por Integrante
 
-  Raul dos Santos Araujo:
-  - Configuracao da parte de Roles de usuario;
-  - Configuracao do Token JWT;
-  - Implementacao da entidade de usuarios e todas as suas funcoes;
-  
+* **Gabriel Kendi Zanon Takeda**:
+  * Configuração inicial e deploy do banco de dados relacional PostgreSQL utilizando infraestrutura de contêineres Docker Compose.
+  * Modelagem DDL e criação estrutural das tabelas de auditoria do sistema de gerenciamento de tokens (`password_reset_tokens` e `verification_tokens`).
+  * Implementação de seeders de banco de dados para população automática de registros de teste da aplicação.
 
-  Leandro Rodrigues de Melo:
+* **Joao Gabriel Silva Maximiano**:
+  * Desenvolvimento da camada de infraestrutura de e-mail utilizando Spring Boot Mail Starter.
+  * Implementação da lógica de envio assíncrono de notificações e mensagens de validação de conta (Verification Tokens) após novos cadastros.
+  * Escrita e validação de testes de integração básicos para os endpoints públicos expostos da API.
 
-      
+* **Leandro Rodrigues de Melo**:
+  * Implementação completa do CRUD mapeado na entidade `FichaTreinoEntity` e seu respectivo ciclo de controle de serviços.
+  * Desenvolvimento das tabelas associativas e mapeamento de chaves estrangeiras complexas para o relacionamento de muitos para muitos (`ficha_treino_exercicios`).
+  * Tratamento global de exceções na camada de persistência para evitar falhas silenciosas de integridade de banco de dados.
 
-  Nicolas Kenzo Yanase:
+* **Miguel Lemos Ramos**:
+  * Modelagem, mapeamento ORM via Hibernate e exposição dos endpoints de controle para as entidades `AulaColetivaEntity` e `AgendamentoEntity`.
+  * Criação de regras de validação customizadas para barrar agendamentos duplicados ou que ultrapassassem a capacidade física máxima das salas da academia.
+  * Configuração inicial do Springdoc OpenAPI (Swagger UI) para documentação automatizada das rotas REST.
 
-  Gabriel Kendi Zanon Takeda:
+* **Nicolas Kenzo Yanase**:
+  * Desenvolvimento da camada de persistência, DTOs e classes controladoras associadas às tabelas de `UnidadeEntity` e `PlanoEntity`.
+  * Implementação de validações na camada de entrada da API utilizando regras do Jakarta Bean Validation (ex: `@NotNull`, `@Min`, `@Size`).
+  * Organização estrutural das rotas base do ecossistema seguindo o padrão arquitetural MVC/Camadas.
 
-  Miguel Lemos Ramos:
-
-  Joao Gabriel Silva Maximiano:
+* **Raul dos Santos Araujo**:
+  * Configuração fina e granular da camada de segurança global através do Spring Security.
+  * Desenvolvimento do fluxo de geração, assinatura e descriptografia de tokens criptográficos JWT.
+  * Implementação da entidade de usuários central (`UsuarioEntity`), tratamento dinâmico de níveis hierárquicos de acesso (Roles/Authorities) e validações com `@AuthenticationPrincipal`.
+  * Correção e ajuste das restrições de chaves estrangeiras estruturais (`ForeignKey Constraints`) nas tabelas relacionais do Hibernate.
+  * Desenvolvimento do microsserviço assíncrono `MqttMetricasListener` para captura e persistência em lote dos dados telemétricos via MQTT/Broker.
 
         
